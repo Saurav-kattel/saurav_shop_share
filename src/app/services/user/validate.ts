@@ -18,7 +18,7 @@ export function validate({ username, email, password }: User) {
     if (password && password?.length <= 5) {
         errors.push({ field: "password", mesaage: "password must be greater then 5 or equal to 6" });
     }
-    if (!email?.match("^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$")) {
+    if (!email?.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")) {
         errors.push({ field: "email", mesaage: "provided email is invalid" });
     }
     return errors;
