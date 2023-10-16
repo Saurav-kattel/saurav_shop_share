@@ -1,4 +1,4 @@
-import { response } from "@/app/services/response";
+import { response } from "@/app/services/utils/response";
 import { createUser } from "@/app/services/user/createuser";
 import generateHash from "@/app/services/user/generateHash";
 import { generateToken } from "@/app/services/user/generateToken";
