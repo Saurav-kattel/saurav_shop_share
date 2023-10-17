@@ -1,10 +1,10 @@
 import { response } from "@/app/services/utils/response";
-import { createUser } from "@/app/services/user/createuser";
-import generateHash from "@/app/services/user/generateHash";
-import { generateToken } from "@/app/services/user/generateToken";
-import { getUser } from "@/app/services/user/getUser";
-import { validate } from "@/app/services/user/validate";
+import generateHash from "@/app/services/api/user/generateHash";
+import { generateToken } from "@/app/services/api/user/generateToken";
+import { getUser } from "@/app/services/api/user/getUser";
+import { validate } from "@/app/services/api/user/validate";
 import { NextResponse } from "next/server";
+import { createUser } from "@/app/services/api/user/createuser";
 
 
 export async function POST(req: Request) {

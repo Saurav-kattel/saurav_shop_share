@@ -1,4 +1,4 @@
-import prisma from "../utils/prisma";
+import prisma from "../../utils/prisma";
 type GetMethod = { email?: string, username?: string, id?: string; };
 
 export async function getUser({ email, username, id }: GetMethod) {

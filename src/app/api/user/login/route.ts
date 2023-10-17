@@ -1,7 +1,7 @@
-import { getUser } from "@/app/services/user/getUser";
-import { generateToken } from "@/app/services/user/generateToken";
+import { getUser } from "@/app/services/api/user/getUser";
+import { generateToken } from "@/app/services/api/user/generateToken";
 import { response } from "@/app/services/utils/response";
-import verifyPassword from "@/app/services/user/verifyPassword";
+import verifyPassword from "@/app/services/api/user/verifyPassword";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -17,7 +17,9 @@ export async function POST(req: Request) {
     if (!user) {
         return response({ status: 400, res: { message: "User not Found" } });
     }
+
     const { isCorrectPassword, verificationError } = await verifyPassword({ hash: user.password, password });
+
 
     if (!isCorrectPassword || verificationError) {
         return response({ status: 401, res: { message: "Wrong Password" } });
