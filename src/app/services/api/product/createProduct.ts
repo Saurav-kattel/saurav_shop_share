@@ -11,9 +11,9 @@ type Product = {
     category: { name: string; }[];
 };
 export async function createProduct({ name, price, sizes, rating, description, quantites, imageUrl, category }: Product) {
-    console.log(name, price, sizes, description, imageUrl);
+
     try {
-        prisma.product.create({
+        const data = await prisma.product.create({
             data: {
                 name,
                 price,
@@ -45,10 +45,10 @@ export async function createProduct({ name, price, sizes, rating, description, q
                 quantity: true,
                 rating: true
             }
-        }).catch((err) => console.log(err));
+        });
 
-        return { data: "" };
+        return { data };
     } catch (err: any) {
-        return { ProductCreationError: err.mesaage };
+        return { ProductCreationError: err };
     }
 }
