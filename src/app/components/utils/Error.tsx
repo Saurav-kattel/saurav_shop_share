@@ -1,6 +1,9 @@
+import { Metadata } from 'next';
 import React from 'react';
-import Image from 'next/image';
-import crying from '../../../../public/crying.gif';
+
+export const metadata: Metadata = {
+    title: "Error"
+};
 const Error = () => {
     return (
         <div className='flex flex-col w-full h-[80vh] justify-center items-center gap-3'>

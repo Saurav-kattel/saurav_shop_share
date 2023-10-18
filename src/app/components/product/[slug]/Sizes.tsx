@@ -7,7 +7,7 @@ type Size = {
 const Sizes = ({ size }: { size: Size[]; }) => {
     return (
         <div className='flex gap-1 items-center justify-center'>{size.map((elem) => {
-            return <div key={elem.id}>
+            return <div key={elem.id} className='p-[2px] rounded-sm hover:scale-110 border-zinc-400 border-[1px]'>
                 <button>{elem.name}</button>
             </div>;
         })}</div>

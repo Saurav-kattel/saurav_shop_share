@@ -28,6 +28,7 @@ model Product {
   rating      Rating     @relation(fields: [ratingId], references: [id])
   ratingId    String     @unique
   quantity    Qunatity[]
+  variants    Variants[]
 }
 
 model Size {
@@ -54,6 +55,13 @@ model Qunatity {
   id        String   @id @default(uuid())
   name      String
   total     Int
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+}
+
+model Variants {
+  id        String   @id @default(uuid())
+  name      String
   Product   Product? @relation(fields: [productId], references: [id])
   productId String?
 }

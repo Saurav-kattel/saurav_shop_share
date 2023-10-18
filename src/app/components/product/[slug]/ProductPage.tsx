@@ -40,12 +40,13 @@ const ProductPage = ({ product }: { product: Products; }) => {
 
                 </div>
                 <CardContent>
-                    Price:  $ {product.price}
+                    <p className='text-3xl text-zinc-700 '>Price:  $ {product.price}</p>
                 </CardContent>
-                <CardFooter className="flex flex-col justify-start items-start">
+                <CardFooter className="flex flex-col justify-start items-start gap-2">
                     <div>Rating: {product.rating.rating} / 5</div>
-                    <div>{stockState}</div>
-                    {product.size.length > 0 ? < Sizes size={product.size} /> : null}
+                    <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
+                    <div>{product.size.length > 0 ? < Sizes size={product.size} /> : null}</div>
+
                     <Button className="bg-slate-900 text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px]"
                         disabled={disabled}
                         variant={"secondary"}>Add to cart </Button>
@@ -55,4 +56,4 @@ const ProductPage = ({ product }: { product: Products; }) => {
     );
 };
 
-export default ProductPage;
+export default ProductPage;;
