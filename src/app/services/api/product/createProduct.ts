@@ -46,7 +46,6 @@ export async function createProduct({ name, price, sizes, rating, description, q
                 rating: true
             }
         });
-
         return { data };
     } catch (err: any) {
         return { ProductCreationError: err };

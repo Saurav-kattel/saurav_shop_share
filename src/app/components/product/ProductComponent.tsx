@@ -19,7 +19,7 @@ export type Products = {
         name: string;
         productId: string;
     }[];
-    quantiy: {
+    quantity: {
         id: string;
         name: string;
         total: string;
@@ -28,7 +28,7 @@ export type Products = {
 
 };
 
-const ProductPage = ({ products }: { products: Products[]; }) => {
+const ProductComponent = ({ products }: { products: Products[]; }) => {
     return (
         <div className='flex flex-wrap gap-2 m-4 p-4 justify-center items-center'>
             {products.map((product) => {
@@ -39,4 +39,4 @@ const ProductPage = ({ products }: { products: Products[]; }) => {
     );
 };
 
-export default ProductPage;
+export default ProductComponent;

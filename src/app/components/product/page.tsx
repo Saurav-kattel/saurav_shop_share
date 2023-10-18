@@ -1,6 +1,11 @@
 import React from 'react';
-import ProductPage from './ProductPage';
+import ProductComponent from './ProductComponent';
+import { Metadata } from 'next';
+import Error from '../utils/Error';
 
+export const metadata: Metadata = {
+    title: 'Online Shopping',
+};
 
 const Page = async () => {
     async function fetchProducts() {
@@ -9,9 +14,15 @@ const Page = async () => {
         return data;
     }
     const data = await fetchProducts();
-    return (
-        <ProductPage products={data.res.product} />
-    );
+    if (data.res.product) {
+        return (
+            <>
+
+                <ProductComponent products={data.res.product} />
+            </>
+        );
+    }
+    return <Error />;
 };
 
 export default Page;
