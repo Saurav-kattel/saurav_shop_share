@@ -30,12 +30,12 @@ export type Products = {
 
 const ProductPage = ({ products }: { products: Products[]; }) => {
     return (
-        <>
+        <div className='flex flex-wrap gap-2 m-4 p-4 justify-center items-center'>
             {products.map((product) => {
                 return < div key={product.id}><CardComponent products={product} /></div>;
             })
             }
-        </>
+        </div>
     );
 };
 
