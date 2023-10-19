@@ -3,7 +3,7 @@ import NavItems from './NavItems';
 
 const NavBar = () => {
     return (
-        <div className='flex px-6 w-[100vw] bg-white shadow-lg h-16 justify-between items-center gap-1 sticky top-0'>
+        <div className='flex px-6  bg-white shadow-lg h-16 justify-between items-center gap-1 sticky top-0'>
             <div className="">
 
             </div>

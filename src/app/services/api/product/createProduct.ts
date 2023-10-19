@@ -9,10 +9,9 @@ type Product = {
     quantites: { name: string, total: number; }[];
     rating: number;
     category: { name: string; }[];
-    variants: { name: string; }[];
+    colors: { name: string; }[];
 };
-export async function createProduct({ name, price, sizes, rating, description, quantites, imageUrl, category, variants }: Product) {
-
+export async function createProduct({ name, price, sizes, rating, description, quantites, imageUrl, category, colors }: Product) {
     try {
         const data = await prisma.product.create({
             data: {
@@ -40,20 +39,18 @@ export async function createProduct({ name, price, sizes, rating, description, q
                         data: category
                     }
                 },
-                variants: {
+                colors: {
                     createMany: {
-                        data: variants
+                        data: colors
                     }
                 }
             },
             include: {
-                size: true,
-                quantity: true,
+                category: true,
                 rating: true,
-                variants: true
+                quantity: true,
+                colors: true
             }
-        }).catch((err) => {
-            console.log(err);
         });
         return { data };
     } catch (err: any) {

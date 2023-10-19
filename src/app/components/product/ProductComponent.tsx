@@ -25,7 +25,10 @@ export type Products = {
         total: string;
         productId: string;
     }[];
-
+    colors: {
+        id: string;
+        name: string;
+    }[];
 };
 
 const ProductComponent = ({ products }: { products: Products[]; }) => {

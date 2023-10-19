@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Metadata } from 'next';
 import Sizes from './Sizes';
+import Colors from './Colors';
 
 export const metadata: Metadata = {
     title: "Product page"
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
 const ProductPage = ({ product }: { product: Products; }) => {
     const [stockState] = useState(product && product.quantity.length > 0 ? "In Stock" : "Out Of Stock");
     const [disabled] = useState(stockState === "Out Of Stock");
+    const sizeLen = product && product.size.length > 0;
+    const colorLen = product.colors && product.colors.length > 0;
     return (
 
         <div className='flex items-center justify-center'>
@@ -34,7 +37,7 @@ const ProductPage = ({ product }: { product: Products; }) => {
                 </CardHeader>
 
                 <CardContent className="flex justify-center items-center">
-                    <img className="rounded-md w-[600px] h-[300px] object-contain" src={product.imageUrl} width={360} height={360} alt="product image" />
+                    <img className="rounded-md w-[500px] h-[300px] object-contain" src={product.imageUrl} width={360} height={360} alt="product image" />
                 </CardContent>
                 <div>
 
@@ -45,7 +48,16 @@ const ProductPage = ({ product }: { product: Products; }) => {
                 <CardFooter className="flex flex-col justify-start items-start gap-2">
                     <div>Rating: {product.rating.rating} / 5</div>
                     <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
-                    <div>{product.size.length > 0 ? < Sizes size={product.size} /> : null}</div>
+                    {colorLen ? <div className=''>
+                        <h4 className='text-2xl text-zinc-800 '>Colors:</h4>
+                        <Colors colors={product.colors} />
+                    </div> : null}
+
+                    {sizeLen ? <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes:</h4>
+                        < Sizes size={product.size} />
+                    </div>
+                        : null}
+
 
                     <Button className="bg-slate-900 text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px]"
                         disabled={disabled}

@@ -9,7 +9,8 @@ export async function getProductById(id: string) {
                 category: true,
                 rating: true,
                 size: true,
-                quantity: true
+                quantity: true,
+                colors: true
             }
         });
         return { data };

@@ -7,7 +7,8 @@ export async function getUProducts() {
                 category: true,
                 rating: true,
                 size: true,
-                quantity: true
+                quantity: true,
+                colors: true
             }
         });
         return { product };
