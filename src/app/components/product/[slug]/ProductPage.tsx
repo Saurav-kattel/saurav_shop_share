@@ -16,6 +16,7 @@ import Sizes from './Sizes';
 import Colors from './Colors';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/features/cart/cartSlice';
+import { v4 } from 'uuid';
 
 export const metadata: Metadata = {
     title: "Product page"
@@ -31,18 +32,19 @@ const ProductPage = ({ product }: { product: Products; }) => {
     const sizeLen = product && product.size.length > 0;
     const colorLen = product.colors && product.colors.length > 0;
     const dispatch = useDispatch();
-    const [selectedSize, setSelectedSize] = useState("");
-    const [selectedColor, setSelectedColor] = useState("");
+    const [selectedSize, setSelectedSize] = useState("M");
+    const [selectedColor, setSelectedColor] = useState("white");
 
     function handleCartDispatch({ product }: { product: Products; }) {
         const payloadValue = {
+            cartId: v4(),
             price: product.price,
             productName: product.name,
             productQuantity: 1,
             productId: product.id,
             imageUrl: product.imageUrl,
-            sizeId: selectedSize,
-            colorId: selectedColor
+            size: selectedSize,
+            color: selectedColor
         };
 
         dispatch(addToCart(payloadValue));

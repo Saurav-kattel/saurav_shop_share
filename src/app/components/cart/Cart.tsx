@@ -1,10 +1,10 @@
 import React from 'react';
 import CartComponent from './CartComponent';
 
-const page = () => {
+const Cart = () => {
     return (
         <CartComponent />
     );
 };
 
-export default page;
+export default Cart;

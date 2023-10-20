@@ -1,5 +1,9 @@
+"use client";
 import React from 'react';
 import NavItems from './NavItems';
+import Cart from '../cart/Cart';
+import { Provider } from 'react-redux';
+import store from '@/redux/app/store';
 
 const NavBar = () => {
     return (
@@ -10,6 +14,10 @@ const NavBar = () => {
             <div className='flex gap-2'>
                 <NavItems name='home' link='/' />
                 <NavItems name='products' link='/components/product' />
+                <Provider store={store}>
+                    <Cart />
+                </Provider>
+
             </div>
         </div>
     );
