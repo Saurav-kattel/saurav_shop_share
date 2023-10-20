@@ -14,16 +14,41 @@ import { Button } from "@/components/ui/button";
 import { Metadata } from 'next';
 import Sizes from './Sizes';
 import Colors from './Colors';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '@/redux/features/cart/cartSlice';
 
 export const metadata: Metadata = {
     title: "Product page"
 };
 
 const ProductPage = ({ product }: { product: Products; }) => {
+
+
+
+
     const [stockState] = useState(product && product.quantity.length > 0 ? "In Stock" : "Out Of Stock");
     const [disabled] = useState(stockState === "Out Of Stock");
     const sizeLen = product && product.size.length > 0;
     const colorLen = product.colors && product.colors.length > 0;
+    const dispatch = useDispatch();
+    const [selectedSize, setSelectedSize] = useState("");
+    const [selectedColor, setSelectedColor] = useState("");
+
+    function handleCartDispatch({ product }: { product: Products; }) {
+        const payloadValue = {
+            price: product.price,
+            productName: product.name,
+            productQuantity: 1,
+            productId: product.id,
+            imageUrl: product.imageUrl,
+            sizeId: selectedSize,
+            colorId: selectedColor
+        };
+
+        dispatch(addToCart(payloadValue));
+
+    }
+
     return (
 
         <div className='flex items-center justify-center'>
@@ -50,17 +75,18 @@ const ProductPage = ({ product }: { product: Products; }) => {
                     <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
                     {colorLen ? <div className=''>
                         <h4 className='text-2xl text-zinc-800 '>Colors:</h4>
-                        <Colors colors={product.colors} />
+                        <Colors colors={product.colors} setSelectedColor={setSelectedColor} />
                     </div> : null}
 
                     {sizeLen ? <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes:</h4>
-                        < Sizes size={product.size} />
+                        < Sizes size={product.size} setSelectedSize={setSelectedSize} />
                     </div>
                         : null}
 
 
                     <Button className="bg-slate-900 text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px]"
                         disabled={disabled}
+                        onClick={() => handleCartDispatch({ product })}
                         variant={"secondary"}>Add to cart </Button>
                 </CardFooter>
 
