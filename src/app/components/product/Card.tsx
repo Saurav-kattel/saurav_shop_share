@@ -27,13 +27,13 @@ const CardComponent = ({ products }: { products: Products; }) => {
                     </CardDescription>
                 </CardHeader>
 
-                <CardContent className="flex justify-center items-center">
+                <CardContent className="flex justify-center flex-col items-center">
                     <img className="rounded-md w-[300px] h-[300px] object-contain" src={products.imageUrl} width={360} height={360} alt="product image" />
-                </CardContent>
-                <CardContent>
-                    Price:  $ {products.price}
+
                 </CardContent>
                 <CardFooter className="flex flex-col justify-start items-start">
+                    <div> Price:  $ {products.quantity[0].price.toString()} </div>
+                    <div> Size:  {products.quantity[0].size}</div>
                     <div>Rating: {products.rating.rating} / 5</div>
                     <div>{stockState}</div>
                 </CardFooter>

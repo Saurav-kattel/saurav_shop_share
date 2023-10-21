@@ -5,7 +5,7 @@ export type CartState = {
         cartId: string;
         productName: string,
         productQuantity: number,
-        price: string,
+        price: number,
         productId: string,
         imageUrl: string,
         size: string;

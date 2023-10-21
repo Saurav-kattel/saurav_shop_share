@@ -26,26 +26,38 @@ const ProductPage = ({ product }: { product: Products; }) => {
     const [stockState] = useState(product && product.quantity.length > 0 ? "In Stock" : "Out Of Stock");
     const [disabled] = useState(stockState === "Out Of Stock");
     const dispatch = useDispatch();
-    const [selectedSize, setSelectedSize] = useState("M");
-    const [selectedColor, setSelectedColor] = useState("white");
+    const [selectedSize, setSelectedSize] = useState({
+        id: product.quantity[0].id,
+        size: product.quantity[0].size
+    });
+    const [selectedColor, setSelectedColor] = useState({
+        id: product.quantity[0].id,
+        color: product.quantity[0].color
+    });
 
+    const [price, setPrice] = useState(
+        product.quantity.find((val) => (val.id === selectedSize.id))?.price
+    );
     function handleCartDispatch({ product }: { product: Products; }) {
         const payloadValue = {
             cartId: v4(),
-            price: product.price,
             productName: product.name,
             productQuantity: 1,
             productId: product.id,
             imageUrl: product.imageUrl,
-            size: selectedSize,
-            color: selectedColor,
-            totalQuantity: Number(product.quantity.find((val) => val.size === selectedSize && val.color === selectedColor)?.total)
+            size: selectedSize.size,
+            price: price || 1,
+            color: selectedColor.color,
+            totalQuantity: Number(product.quantity.find((val) => val.size === selectedSize.size && val.color === selectedColor.color)?.total)
         };
 
         dispatch(addToCart(payloadValue));
 
     }
 
+    const [colorsArray, setColorsArray] = useState(product.quantity.filter((items) => selectedSize.size === items.size));
+    console.log("colorsArray", colorsArray);
+    console.log(selectedSize);
     return (
 
         <div className='flex items-center justify-center'>
@@ -65,19 +77,23 @@ const ProductPage = ({ product }: { product: Products; }) => {
 
                 </div>
                 <CardContent>
-                    <p className='text-3xl text-zinc-700 '>Price:  $ {product.price}</p>
+                    <p className='text-3xl text-zinc-700 '>Price:  ${price?.toString()}</p>
                 </CardContent>
                 <CardFooter className="flex flex-col justify-start items-start gap-2">
                     <div>Rating: {product.rating.rating} / 5</div>
                     <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
-                    <div className=''>
-                        <h4 className='text-2xl text-zinc-800 '>Colors:</h4>
-                        <Colors quantity={product.quantity} setSelectedColor={setSelectedColor} />
-                    </div>
 
                     <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes:</h4>
-                        < Sizes quantity={product.quantity} setSelectedSize={setSelectedSize} />
+                        < Sizes quantity={product.quantity} setPrice={setPrice} setColorsArray={setColorsArray} setSelectedSize={setSelectedSize} />
                     </div>
+                    <div className="">
+
+                    </div>
+                    <div className=''>
+                        <h4 className='text-2xl text-zinc-800 '>Colors:</h4>
+                        <Colors quantity={colorsArray} setSelectedColor={setSelectedColor} />
+                    </div>
+
 
 
 
