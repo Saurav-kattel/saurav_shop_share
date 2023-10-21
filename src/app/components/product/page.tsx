@@ -17,7 +17,6 @@ const Page = async () => {
     if (data.res.product) {
         return (
             <>
-
                 <ProductComponent products={data.res.product} />
             </>
         );

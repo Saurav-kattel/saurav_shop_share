@@ -23,26 +23,17 @@ model Product {
   imageUrl    String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  size        Size[]
+  ratingId    String     @unique
   category    Category[]
   rating      Rating     @relation(fields: [ratingId], references: [id])
-  ratingId    String     @unique
   quantity    Qunatity[]
-  colors      Colors[]
-}
-
-model Size {
-  id        String   @id @default(uuid())
-  name      String
-  Product   Product? @relation(fields: [productId], references: [id])
-  productId String?
 }
 
 model Category {
   id        String   @id @default(uuid())
   name      String   @default("General")
-  Product   Product? @relation(fields: [productId], references: [id])
   productId String?
+  Product   Product? @relation(fields: [productId], references: [id])
 }
 
 model Rating {
@@ -53,15 +44,9 @@ model Rating {
 
 model Qunatity {
   id        String   @id @default(uuid())
-  name      String
   total     Int
-  Product   Product? @relation(fields: [productId], references: [id])
   productId String?
-}
-
-model Colors {
-  id        String   @id @default(uuid())
-  name      String
+  color     String?
+  size      String?
   Product   Product? @relation(fields: [productId], references: [id])
-  productId String?
 }

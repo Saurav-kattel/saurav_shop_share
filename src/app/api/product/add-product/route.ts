@@ -19,9 +19,9 @@ export async function POST(req: Request) {
     if (!isAuthorized) {
         return response({ status: 401, res: { message: "unauthorized access" } });
     }
-    let { name, description, price, rating, quantites, sizes, imageUrl, category, colors } = await req.json();
+    let { name, description, price, rating, quantites, imageUrl, category } = await req.json();
 
-    const { data, ProductCreationError } = await createProduct({ name, description, rating, price, sizes, imageUrl, quantites, category, colors });
+    const { data, ProductCreationError } = await createProduct({ name, description, rating, price, imageUrl, quantites, category });
     if (!data || ProductCreationError) {
         return response({ status: 500, res: { message: ProductCreationError } });
     }

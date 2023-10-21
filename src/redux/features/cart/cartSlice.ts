@@ -10,6 +10,7 @@ export type CartState = {
         imageUrl: string,
         size: string;
         color: string;
+        totalQuantity: undefined | string;
 
     };
 };
@@ -32,15 +33,26 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action: { payload: CartState['cartItem']; }) => {
-            console.log(action.payload);
+            if (!action.payload.totalQuantity) {
+                return;
+            }
+            if (Number(action.payload.totalQuantity) <= 0) {
+                return;
+            }
             if (state.cartItem.length <= 0) {
                 state.cartItem.push(action.payload);
             } else {
                 let shouldPush = true;
                 state.cartItem.map((product: CartState['cartItem']) => {
-                    if (product.productId === action.payload.productId && product.color === action.payload.color && product.size === action.payload.size) {
+                    if (
+                        product.productId === action.payload.productId &&
+                        product.color === action.payload.color &&
+                        product.size === action.payload.size
+                    ) {
                         shouldPush = false;
-                        product.productQuantity++;
+                        if (product.productQuantity < Number(action.payload.totalQuantity)) {
+                            product.productQuantity++;
+                        }
                     }
                 });
                 if (shouldPush) {
