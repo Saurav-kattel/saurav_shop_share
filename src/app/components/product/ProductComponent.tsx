@@ -3,7 +3,6 @@ import CardComponent from './Card';
 export type Products = {
     id: string;
     name: string;
-    price: string;
     description: string;
     imageUrl: string;
     createdAt: string;
@@ -14,21 +13,15 @@ export type Products = {
         id: string;
         rating: string;
     };
-    size: {
-        id: string;
-        name: string;
-        productId: string;
-    }[];
     quantity: {
         id: string;
-        name: string;
+        color: string;
+        size: string;
         total: string;
         productId: string;
+        price: number;
     }[];
-    colors: {
-        id: string;
-        name: string;
-    }[];
+
 };
 
 const ProductComponent = ({ products }: { products: Products[]; }) => {

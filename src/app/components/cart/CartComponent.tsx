@@ -1,8 +1,8 @@
 "üse client";
 import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Products } from '../product/ProductComponent';
-import { addToCart, removeItem } from '@/redux/features/cart/cartSlice';
+import { addToCart, clearCart, removeItem } from '@/redux/features/cart/cartSlice';
+import { Button } from '@/components/ui/button';
 
 
 type Items = {
@@ -14,6 +14,7 @@ type Items = {
     productName: string;
     productQuantity: number;
     cartId: string;
+    totalQuantity: number;
 };
 
 const CartComponent = () => {
@@ -48,11 +49,13 @@ const CartComponent = () => {
             imageUrl: product.imageUrl,
             productName: product.productName,
             color: product.color,
-            productQuantity: product.productQuantity,
             cartId: product.cartId,
-            price: product.price.toString()
+            price: product.price.toString(),
+            productQuantity: Number(product.productQuantity),
+            totalQuantity: Number(product.totalQuantity)
         }));
     }
+
     return (
         <>
             <section onClick={toggleCart}>
@@ -63,7 +66,7 @@ const CartComponent = () => {
                 <h3 className='text-zinc-700 p-4 text-3xl '>Shopping Cart</h3>
                 <div className="">
                     {cartItem.map((items: Items, idx: number) => {
-                        return <div key={idx} className="flex flex-wrap gap-4 p-4 bg-gray-300 w-[37vw] items-center">
+                        return <div key={idx} className="flex flex-wrap gap-4 p-4 w-[37vw] items-center">
                             <img className='rounded-sm w-[60px] h-[40px]' src={items.imageUrl} width={60} height={60} alt={items.productName} />
                             <p className='text-lg font-bold text-zinc-600'>{items.productName} ({items.color}) ({items.size})</p>
                             <p className='text-zinc-600 text-xl'>${items.price}</p>
@@ -78,8 +81,18 @@ const CartComponent = () => {
                         Total: $ {total}
                     </div> : <p className='p-5 text-2xl text-zinc-600'>Cart Is Empty</p>
                 }
+                <div >
+                    <Button
+                        className="text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px] mx-4"
+                        variant={"destructive"}
+                        onClick={() => {
+                            dispatch(clearCart());
+                        }}
 
+                    >ClearCart</Button>
+                </div>
             </div >
+
         </>
     );
 };

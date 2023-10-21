@@ -9,12 +9,11 @@ type Product = {
     rating: number;
     category: { name: string; }[];
 };
-export async function createProduct({ name, price, rating, description, quantites, imageUrl, category }: Product) {
+export async function createProduct({ name, rating, description, quantites, imageUrl, category }: Product) {
     try {
         const data = await prisma.product.create({
             data: {
                 name,
-                price,
                 description,
                 imageUrl,
                 quantity: {
@@ -38,7 +37,7 @@ export async function createProduct({ name, price, rating, description, quantite
                 rating: true,
                 quantity: true,
             }
-        }).catch((err) => {
+        }).catch((err: any) => {
             console.log(err);
         });
 

@@ -10,7 +10,7 @@ export type CartState = {
         imageUrl: string,
         size: string;
         color: string;
-        totalQuantity: undefined | string;
+        totalQuantity: undefined | number;
 
     };
 };
@@ -22,7 +22,7 @@ const initialState: Record<string, any> = {
 function calculateTotal({ cart }: { cart: CartState["cartItem"][]; }) {
     let total = 0;
     cart.map((items) => {
-        let itemsTotalPrice = Number(items.price) * items.productQuantity;
+        let itemsTotalPrice = Number(items.price) * Number(items.productQuantity);
         total += itemsTotalPrice;
     });
     return total;
@@ -50,7 +50,7 @@ const cartSlice = createSlice({
                         product.size === action.payload.size
                     ) {
                         shouldPush = false;
-                        if (product.productQuantity < Number(action.payload.totalQuantity)) {
+                        if (product.productQuantity < action.payload.totalQuantity!) {
                             product.productQuantity++;
                         }
                     }
@@ -74,10 +74,13 @@ const cartSlice = createSlice({
             if (state.total > 0) {
                 state.total = calculateTotal({ cart: state.cartItem });
             }
+        },
+        clearCart: (state) => {
+            state.total = 0;
+            state.cartItem = [];
         }
     },
-
 });
 
 export default cartSlice.reducer;
-export const { addToCart, removeItem } = cartSlice.actions;
+export const { addToCart, removeItem, clearCart } = cartSlice.actions;

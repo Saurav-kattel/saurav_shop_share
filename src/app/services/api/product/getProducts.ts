@@ -6,9 +6,7 @@ export async function getUProducts() {
             include: {
                 category: true,
                 rating: true,
-                size: true,
                 quantity: true,
-                colors: true
             }
         });
         return { product };

@@ -23,14 +23,8 @@ export const metadata: Metadata = {
 };
 
 const ProductPage = ({ product }: { product: Products; }) => {
-
-
-
-
     const [stockState] = useState(product && product.quantity.length > 0 ? "In Stock" : "Out Of Stock");
     const [disabled] = useState(stockState === "Out Of Stock");
-    const sizeLen = product && product.size.length > 0;
-    const colorLen = product.colors && product.colors.length > 0;
     const dispatch = useDispatch();
     const [selectedSize, setSelectedSize] = useState("M");
     const [selectedColor, setSelectedColor] = useState("white");
@@ -45,7 +39,7 @@ const ProductPage = ({ product }: { product: Products; }) => {
             imageUrl: product.imageUrl,
             size: selectedSize,
             color: selectedColor,
-            totalQuantity: product.quantity.find((val) => val.name === selectedSize)?.total
+            totalQuantity: Number(product.quantity.find((val) => val.size === selectedSize && val.color === selectedColor)?.total)
         };
 
         dispatch(addToCart(payloadValue));
@@ -76,15 +70,15 @@ const ProductPage = ({ product }: { product: Products; }) => {
                 <CardFooter className="flex flex-col justify-start items-start gap-2">
                     <div>Rating: {product.rating.rating} / 5</div>
                     <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
-                    {colorLen ? <div className=''>
+                    <div className=''>
                         <h4 className='text-2xl text-zinc-800 '>Colors:</h4>
-                        <Colors colors={product.colors} setSelectedColor={setSelectedColor} />
-                    </div> : null}
-
-                    {sizeLen ? <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes:</h4>
-                        < Sizes size={product.size} setSelectedSize={setSelectedSize} />
+                        <Colors quantity={product.quantity} setSelectedColor={setSelectedColor} />
                     </div>
-                        : null}
+
+                    <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes:</h4>
+                        < Sizes quantity={product.quantity} setSelectedSize={setSelectedSize} />
+                    </div>
+
 
 
                     <Button className="bg-slate-900 text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px]"

@@ -8,9 +8,7 @@ export async function getProductById(id: string) {
             }, include: {
                 category: true,
                 rating: true,
-                size: true,
                 quantity: true,
-                colors: true
             }
         });
         return { data };
