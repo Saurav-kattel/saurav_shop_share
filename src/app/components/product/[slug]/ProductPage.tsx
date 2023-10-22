@@ -17,6 +17,7 @@ import Colors from './Colors';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/features/cart/cartSlice';
 import { v4 } from 'uuid';
+import Tags from './Tags';
 
 export const metadata: Metadata = {
     title: "Product page"
@@ -84,9 +85,9 @@ const ProductPage = ({ product }: { product: Products; }) => {
                     <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes: ({selectedSize.size})</h4>
                         < Sizes selectedSize={selectedSize} quantity={product.quantity} setPrice={setPrice} setColorsArray={setColorsArray} setSelectedSize={setSelectedSize} />
                     </div>
-                    <div className="">
-
-                    </div>
+                    {product.tags ? <div className="flex flex-col gap-1 items-start text-xl text-zinc-700">
+                        <span className='text-2xl text-zinc-900'>Tags:</span>  <Tags tags={product.tags} />
+                    </div> : null}
                     <div className=''>
                         <h4 className='text-xl text-zinc-800 '>Colors: ({selectedColor.color})</h4>
                         <Colors selectedColor={selectedColor} quantity={colorsArray} setSelectedColor={setSelectedColor} />

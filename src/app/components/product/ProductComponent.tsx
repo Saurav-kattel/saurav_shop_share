@@ -13,6 +13,7 @@ export type Products = {
         id: string;
         rating: string;
     };
+    tags: string[];
     quantity: {
         id: string;
         color: string;

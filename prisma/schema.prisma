@@ -15,6 +15,16 @@ model User {
   role     String @default("user")
 }
 
+model ProductRequest {
+  id               String @id @default(uuid())
+  userId           String
+  productId        String
+  size             String
+  color            String
+  requestedQuatity Int
+  price            Float
+}
+
 model Product {
   id          String     @id @default(uuid())
   name        String
@@ -26,11 +36,12 @@ model Product {
   category    Category[]
   rating      Rating     @relation(fields: [ratingId], references: [id])
   quantity    Qunatity[]
+  tags        String[]
 }
 
 model Category {
   id        String   @id @default(uuid())
-  name      String   @default("General")
+  name      String   @default("general")
   productId String?
   Product   Product? @relation(fields: [productId], references: [id])
 }

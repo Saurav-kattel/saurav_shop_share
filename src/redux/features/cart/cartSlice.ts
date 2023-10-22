@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export type CartState = {
     total: number,
     cartItem: {
@@ -16,7 +16,10 @@ export type CartState = {
 };
 const initialState: Record<string, any> = {
     total: 0,
-    cartItem: []
+    cartItem: [],
+    requestPending: false,
+    success: false,
+    error: {}
 };
 
 function calculateTotal({ cart }: { cart: CartState["cartItem"][]; }) {
@@ -27,6 +30,34 @@ function calculateTotal({ cart }: { cart: CartState["cartItem"][]; }) {
     });
     return total.toFixed(2);
 }
+
+const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (cartItem: {
+    cartId: string,
+    productId: string;
+    size: string;
+    color: string;
+    productQuantity: number;
+    price: number;
+}[]) => {
+    const data = await fetch(`/api/product/request-purchase`, {
+        method: "POST",
+        headers: {
+            auth: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWwuY29tIiwidXNlcklkIjoiNTI2MzZmMGUtNzdiZi00YTM2LTg3MWUtYTlmZGY3NGM3ZTY1IiwiaWF0IjoxNjk3ODY2MzkzLCJzdWIiOiI1MjYzNmYwZS03N2JmLTRhMzYtODcxZS1hOWZkZjc0YzdlNjUifQ.97kuf3bKR-hwpJ2Juo4c4VNUor2u_z3Brj31Ij-yPaA"
+        },
+        body: JSON.stringify({
+            cartItem: [cartItem.map((item) => ({
+                id: item.cartId,
+                color: item.color,
+                requestedQuantity: item.productQuantity,
+                productId: item.productId,
+                size: item.size,
+                price: item.price,
+            }))]
+        })
+    });
+    console.log(data);
+    return await data.json();
+});
 
 const cartSlice = createSlice({
     name: "cartSlice",
@@ -78,9 +109,28 @@ const cartSlice = createSlice({
         clearCart: (state) => {
             state.total = 0;
             state.cartItem = [];
-        }
+        },
+    },
+    extraReducers(builder) {
+        builder.
+            addCase(requestPurchase.pending, (state) => {
+                state.requestPending = true;
+            })
+            .addCase(requestPurchase.rejected, (state, action) => {
+                state.error = action.error;
+                state.success = false;
+                state.requestPending = false;
+
+            })
+            .addCase(requestPurchase.fulfilled, (state) => {
+                state.error = {};
+                state.requestPending = false;
+                state.success = true;
+            });
     },
 });
 
 export default cartSlice.reducer;
 export const { addToCart, removeItem, clearCart } = cartSlice.actions;
+
+export { requestPurchase };

@@ -1,8 +1,9 @@
 "üse client";
 import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, clearCart, removeItem } from '@/redux/features/cart/cartSlice';
+import { addToCart, clearCart, removeItem, requestPurchase } from '@/redux/features/cart/cartSlice';
 import { Button } from '@/components/ui/button';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
 
 type Items = {
@@ -20,7 +21,8 @@ type Items = {
 const CartComponent = () => {
     const cartItem = useSelector((state: any) => state.cart.cartItem);
     const total = useSelector((state: any) => state.cart.total);
-    const dispatch = useDispatch();
+    const error = useSelector((state: any) => state.cart.error);
+    const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const cartRef = useRef<HTMLDivElement>(null);
     function toggleCart() {
         if (cartRef.current?.classList.contains("translate-x-0")) {
@@ -31,6 +33,7 @@ const CartComponent = () => {
             cartRef.current?.classList.add("translate-x-0");
         }
     }
+    console.log(error);
     function handleDecreaseDispatch({ product }: { product: Items; }) {
 
         dispatch(removeItem({
@@ -90,6 +93,7 @@ const CartComponent = () => {
                         }}
 
                     >ClearCart</Button> : null}
+                    <button onClick={() => dispatch(requestPurchase(cartItem))}>request</button>
                 </div>
             </div >
 
