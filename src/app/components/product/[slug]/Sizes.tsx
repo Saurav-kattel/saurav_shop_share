@@ -1,6 +1,6 @@
 import React, { SetStateAction } from 'react';
 import { Products } from '../ProductComponent';
-import { removeDuplicateSize } from '@/app/services/componenets/product/removeDuplicate';
+import { removeDuplicateSize } from '@/app/services/components/product/removeDuplicateSize';
 
 const Sizes = ({
     quantity,
