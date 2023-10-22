@@ -38,4 +38,4 @@ const Sizes = ({
     );
 };
 
-export default Sizes;;
+export default Sizes;
