@@ -11,10 +11,13 @@ import { Button } from "@/components/ui/button";
 import React, { useState } from 'react';
 import { Products } from "./ProductComponent";
 import Link from "next/link";
+import { space } from "postcss/lib/list";
+import { removeDuplicateSize } from "@/app/services/componenets/product/removeDuplicate";
 
 const CardComponent = ({ products }: { products: Products; }) => {
     const [stockState] = useState(products.quantity.length > 0 ? "In Stock" : "Out Of Stock");
     const [disabled] = useState(stockState === "Out Of Stock");
+
     return (
 
         <Card className="container w-[40vw] p-0  shadow-md">
@@ -33,7 +36,12 @@ const CardComponent = ({ products }: { products: Products; }) => {
                 </CardContent>
                 <CardFooter className="flex flex-col justify-start items-start">
                     <div> Price:  $ {products.quantity[0].price.toString()} </div>
-                    <div> Size:  {products.quantity[0].size}</div>
+                    <div className="flex gap-2"> Size: {removeDuplicateSize({ products: products.quantity }).map((items) => {
+                        return <span key={items.size}>{items.size}</span>;
+                    })}</div>
+                    <div className="flex gap-2">Colors: {products.quantity.map((items) => {
+                        return <span className={`w-4 h-4 rounded-full ${items.color === 'white' ? "border-[1px] border-slate-900" : null} `} style={{ background: items.color }}></span>;
+                    })}</div>
                     <div>Rating: {products.rating.rating} / 5</div>
                     <div>{stockState}</div>
                 </CardFooter>

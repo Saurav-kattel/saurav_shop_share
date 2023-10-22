@@ -56,8 +56,6 @@ const ProductPage = ({ product }: { product: Products; }) => {
     }
 
     const [colorsArray, setColorsArray] = useState(product.quantity.filter((items) => selectedSize.size === items.size));
-    console.log("colorsArray", colorsArray);
-    console.log(selectedSize);
     return (
 
         <div className='flex items-center justify-center'>
@@ -83,18 +81,16 @@ const ProductPage = ({ product }: { product: Products; }) => {
                     <div>Rating: {product.rating.rating} / 5</div>
                     <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
 
-                    <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes:</h4>
-                        < Sizes quantity={product.quantity} setPrice={setPrice} setColorsArray={setColorsArray} setSelectedSize={setSelectedSize} />
+                    <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes: ({selectedSize.size})</h4>
+                        < Sizes selectedSize={selectedSize} quantity={product.quantity} setPrice={setPrice} setColorsArray={setColorsArray} setSelectedSize={setSelectedSize} />
                     </div>
                     <div className="">
 
                     </div>
                     <div className=''>
-                        <h4 className='text-2xl text-zinc-800 '>Colors:</h4>
-                        <Colors quantity={colorsArray} setSelectedColor={setSelectedColor} />
+                        <h4 className='text-xl text-zinc-800 '>Colors: ({selectedColor.color})</h4>
+                        <Colors selectedColor={selectedColor} quantity={colorsArray} setSelectedColor={setSelectedColor} />
                     </div>
-
-
 
 
                     <Button className="bg-slate-900 text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px]"

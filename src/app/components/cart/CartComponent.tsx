@@ -50,7 +50,7 @@ const CartComponent = () => {
             productName: product.productName,
             color: product.color,
             cartId: product.cartId,
-            price: product.price.toString(),
+            price: product.price,
             productQuantity: Number(product.productQuantity),
             totalQuantity: Number(product.totalQuantity)
         }));
@@ -82,14 +82,14 @@ const CartComponent = () => {
                     </div> : <p className='p-5 text-2xl text-zinc-600'>Cart Is Empty</p>
                 }
                 <div >
-                    <Button
+                    {cartItem.length ? <Button
                         className="text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px] mx-4"
                         variant={"destructive"}
                         onClick={() => {
                             dispatch(clearCart());
                         }}
 
-                    >ClearCart</Button>
+                    >ClearCart</Button> : null}
                 </div>
             </div >
 

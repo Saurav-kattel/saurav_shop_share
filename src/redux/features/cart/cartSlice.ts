@@ -25,7 +25,7 @@ function calculateTotal({ cart }: { cart: CartState["cartItem"][]; }) {
         let itemsTotalPrice = Number(items.price) * Number(items.productQuantity);
         total += itemsTotalPrice;
     });
-    return total;
+    return total.toFixed(2);
 }
 
 const cartSlice = createSlice({
