@@ -4,8 +4,7 @@ import { getUser } from "@/app/services/api/user/getUser";
 import { response } from "@/app/services/utils/response";
 
 export async function GET(req: Request) {
-    const id = req.headers.get("auth");
-    console.log("id", id);
+    const id = req.headers.get("auth");;
     if (!id) {
         return response({ status: 404, res: { message: "auth not found" } });
     }
@@ -14,7 +13,6 @@ export async function GET(req: Request) {
         return response({ status: 500, res: { message: JwtDecodeError } });
     }
     const user = await getUser({ id: payload.userId as string });
-    console.log("payload", payload);
     if (!user) {
         return response({ status: 404, res: { message: "user not found" } });
     }

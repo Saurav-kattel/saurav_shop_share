@@ -39,8 +39,6 @@ export async function createProduct({ name, rating, description, quantites, imag
                 rating: true,
                 quantity: true,
             },
-        }).catch((err: any) => {
-            console.log(err);
         });
 
         return { data };
