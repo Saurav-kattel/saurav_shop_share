@@ -1,5 +1,5 @@
 "üse client";
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, clearCart, removeItem, requestPurchase } from '@/redux/features/cart/cartSlice';
 import { Button } from '@/components/ui/button';
@@ -26,8 +26,8 @@ export type Items = {
 
 const CartComponent = () => {
     const cartItem = useSelector((state: any) => state.cart.cartItem);
-    const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const cartRef = useRef<HTMLDivElement>(null);
+
     function toggleCart() {
         if (cartRef.current?.classList.contains("translate-x-0")) {
             cartRef.current?.classList.remove("translate-x-0");
@@ -36,10 +36,8 @@ const CartComponent = () => {
             cartRef.current?.classList.remove("translate-x-full");
             cartRef.current?.classList.add("translate-x-0");
         }
+
     }
-
-
-
     return (
         <>
             <section onClick={toggleCart}>
