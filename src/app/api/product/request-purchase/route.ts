@@ -8,8 +8,10 @@ type TCartItem = {
     productId: string;
     size: string;
     color: string;
-    requestedQuatity: number;
+    requestedQuantity: number;
     price: number;
+    userId: string;
+    quantityId: string;
 }[];
 export async function POST(req: Request) {
     const id = req.headers.get("auth");
@@ -27,9 +29,7 @@ export async function POST(req: Request) {
         return response({ status: 400, res: { message: "user not found" } });
     }
     const { cartItem } = await req.json();
-    console.log("cartItem", cartItem);
     const { success, ProductRequestCreatonError, EmptyCartError } = await createProductRequest({ cartItem: cartItem as TCartItem, userId: user.id });
-    console.log(success, ProductRequestCreatonError, EmptyCartError);
     if (!success || ProductRequestCreatonError || EmptyCartError) {
         return response({ status: 500, res: { message: ProductRequestCreatonError || EmptyCartError } });
     }

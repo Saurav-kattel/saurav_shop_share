@@ -8,7 +8,7 @@ CREATE TABLE "ProductRequest" (
     "productId" TEXT NOT NULL,
     "size" TEXT NOT NULL,
     "color" TEXT NOT NULL,
-    "requestedQuatity" INTEGER NOT NULL,
+    "requestedQuantity" INTEGER NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "ProductRequest_pkey" PRIMARY KEY ("id")

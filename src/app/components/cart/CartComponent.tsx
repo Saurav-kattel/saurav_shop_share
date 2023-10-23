@@ -16,6 +16,7 @@ type Items = {
     productQuantity: number;
     cartId: string;
     totalQuantity: number;
+    quantityId: string;
 };
 
 const CartComponent = () => {
@@ -33,7 +34,7 @@ const CartComponent = () => {
             cartRef.current?.classList.add("translate-x-0");
         }
     }
-    console.log(error);
+
     function handleDecreaseDispatch({ product }: { product: Items; }) {
 
         dispatch(removeItem({
@@ -55,7 +56,8 @@ const CartComponent = () => {
             cartId: product.cartId,
             price: product.price,
             productQuantity: Number(product.productQuantity),
-            totalQuantity: Number(product.totalQuantity)
+            totalQuantity: Number(product.totalQuantity),
+            quantityId: product.quantityId
         }));
     }
 

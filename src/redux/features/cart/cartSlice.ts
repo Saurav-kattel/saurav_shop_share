@@ -11,6 +11,7 @@ export type CartState = {
         size: string;
         color: string;
         totalQuantity: undefined | number;
+        quantityId: string;
 
     };
 };
@@ -38,24 +39,26 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (ca
     color: string;
     productQuantity: number;
     price: number;
+    quantityId: string;
 }[]) => {
+    const reqArray = cartItem.map((item) => ({
+        color: item.color,
+        requestedQuantity: item.productQuantity,
+        productId: item.productId,
+        size: item.size,
+        price: item.price,
+        userId: "",
+        quantityId: item.quantityId
+    }));
     const data = await fetch(`/api/product/request-purchase`, {
         method: "POST",
         headers: {
-            auth: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWwuY29tIiwidXNlcklkIjoiNTI2MzZmMGUtNzdiZi00YTM2LTg3MWUtYTlmZGY3NGM3ZTY1IiwiaWF0IjoxNjk3ODY2MzkzLCJzdWIiOiI1MjYzNmYwZS03N2JmLTRhMzYtODcxZS1hOWZkZjc0YzdlNjUifQ.97kuf3bKR-hwpJ2Juo4c4VNUor2u_z3Brj31Ij-yPaA"
+            auth: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWwuY29tIiwidXNlcklkIjoiYzI0MTQ5N2EtNDYxNi00YzU0LTgyM2UtMmI1MTJiYmFiNGNhIiwiaWF0IjoxNjk4MDM3NjY0LCJzdWIiOiJjMjQxNDk3YS00NjE2LTRjNTQtODIzZS0yYjUxMmJiYWI0Y2EifQ.Uw3mdFEVj8rA-bWw7msJYash9sVtErCUVm8lnfgEDa0"
         },
         body: JSON.stringify({
-            cartItem: [cartItem.map((item) => ({
-                id: item.cartId,
-                color: item.color,
-                requestedQuantity: item.productQuantity,
-                productId: item.productId,
-                size: item.size,
-                price: item.price,
-            }))]
+            cartItem: reqArray
         })
     });
-    console.log(data);
     return await data.json();
 });
 

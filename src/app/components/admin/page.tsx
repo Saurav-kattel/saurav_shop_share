@@ -1,17 +1,20 @@
-import React from 'react';
+
+import Req from './Req';
 
 const page = async () => {
     const getProducts = async () => {
-        const data = await fetch(`${process.env.BASE_URL}/api/admin/product/get-product-request`, {
-            method: "GET",
+        const res = await fetch(`${process.env.BASE_URL}/api/admin/get-requested-product`, {
             headers: {
-                auth: "eyJhbGciOiJIUzI1NiJ.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWwuY29tIiwidXNlcklkIjoiNTI2MzZmMGUtNzdiZi00YTM2LTg3MWUtYTlmZGY3NGM3ZTY1IiwiaWF0IjoxNjk3ODY2MzkzLCJzdWIiOiI1MjYzNmYwZS03N2JmLTRhMzYtODcxZS1hOWZkZjc0YzdlNjUifQ.97kuf3bKR-hwpJ2Juo4c4VNUor2u_z3Brj31Ij-yPaA"
+                method: "GET",
+                auth: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWwuY29tIiwidXNlcklkIjoiYzI0MTQ5N2EtNDYxNi00YzU0LTgyM2UtMmI1MTJiYmFiNGNhIiwiaWF0IjoxNjk4MDM3NjY0LCJzdWIiOiJjMjQxNDk3YS00NjE2LTRjNTQtODIzZS0yYjUxMmJiYWI0Y2EifQ.Uw3mdFEVj8rA-bWw7msJYash9sVtErCUVm8lnfgEDa0"
             }
         });
-        return await data.json();
+        let data = await res.json();
+        return data;
     };
+    const data = await getProducts();
     return (
-        <div>{JSON.stringify(await getProducts())}</div>
+        <Req data={data} />
     );
 };
 

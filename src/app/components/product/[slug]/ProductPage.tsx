@@ -49,7 +49,8 @@ const ProductPage = ({ product }: { product: Products; }) => {
             size: selectedSize.size,
             price: price || 1,
             color: selectedColor.color,
-            totalQuantity: Number(product.quantity.find((val) => val.size === selectedSize.size && val.color === selectedColor.color)?.total)
+            totalQuantity: Number(product.quantity.find((val) => val.size === selectedSize.size && val.color === selectedColor.color)?.total),
+            quantityId: selectedSize.id
         };
 
         dispatch(addToCart(payloadValue));

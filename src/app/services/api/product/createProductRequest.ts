@@ -8,22 +8,17 @@ export async function createProductRequest({ cartItem, userId }: {
         color: string;
         requestedQuantity: number;
         price: number;
+        quantityId: string;
+        userId: string;
     }[];
     userId: string;
 }) {
     if (cartItem.length > 0) {
         try {
             for (let item of cartItem) {
-                console.log("item", item);
-                let data = await prisma.productRequest.create({
-                    data: {
-                        productId: item.productId,
-                        userId,
-                        requestedQuatity: item.requestedQuantity,
-                        size: item.size,
-                        color: item.color,
-                        price: item.price
-                    }
+                item["userId"] = userId;
+                await prisma.productRequest.create({
+                    data: { ...item }
                 });
             }
             return { success: true };

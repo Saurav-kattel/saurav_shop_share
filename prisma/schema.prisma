@@ -16,13 +16,14 @@ model User {
 }
 
 model ProductRequest {
-  id               String @id @default(uuid())
-  userId           String
-  productId        String
-  size             String
-  color            String
-  requestedQuatity Int
-  price            Float
+  id                String  @id @default(uuid())
+  userId            String
+  productId         String?
+  size              String
+  color             String
+  requestedQuantity Int
+  price             Float
+  quantityId        String
 }
 
 model Product {
@@ -33,10 +34,10 @@ model Product {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   ratingId    String     @unique
+  tags        String[]
   category    Category[]
   rating      Rating     @relation(fields: [ratingId], references: [id])
   quantity    Qunatity[]
-  tags        String[]
 }
 
 model Category {
