@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, clearCart, removeItem, requestPurchase } from '@/redux/features/cart/cartSlice';
 import { Button } from '@/components/ui/button';
 import { ThunkDispatch } from '@reduxjs/toolkit';
+import Total from './Total';
+import ClearCartComponent from './ClearCartComponent';
+import CartItems from './CartItems';
 
 
 type Items = {
@@ -21,8 +24,6 @@ type Items = {
 
 const CartComponent = () => {
     const cartItem = useSelector((state: any) => state.cart.cartItem);
-    const total = useSelector((state: any) => state.cart.total);
-    const error = useSelector((state: any) => state.cart.error);
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const cartRef = useRef<HTMLDivElement>(null);
     function toggleCart() {
@@ -46,7 +47,6 @@ const CartComponent = () => {
         }));
     }
     function handleIncreaseDispatch({ product }: { product: Items; }) {
-
         dispatch(addToCart({
             productId: product.productId,
             size: product.size,
@@ -66,37 +66,20 @@ const CartComponent = () => {
             <section onClick={toggleCart}>
                 CART
             </section>
+
             <div ref={cartRef} className="w-[40vw] h-[100vh] absolute top-0 right-0  transition  translate-x-full flex flex-col  bg-secondary">
                 <button onClick={toggleCart} className='text-slate-900 w-8 absolute p-4 right-0' > X</button>
                 <h3 className='text-zinc-700 p-4 text-3xl '>Shopping Cart</h3>
-                <div className="">
-                    {cartItem.map((items: Items, idx: number) => {
-                        return <div key={idx} className="flex flex-wrap gap-4 p-4 w-[37vw] items-center">
-                            <img className='rounded-sm w-[60px] h-[40px]' src={items.imageUrl} width={60} height={60} alt={items.productName} />
-                            <p className='text-lg font-bold text-zinc-600'>{items.productName} ({items.color}) ({items.size})</p>
-                            <p className='text-zinc-600 text-xl'>${items.price}</p>
-                            <button onClick={() => handleIncreaseDispatch({ product: items })}>+</button>
-                            <p className='text-zinc-600 text-lg ' >{items.productQuantity}</p>
-                            <button onClick={() => handleDecreaseDispatch({ product: items })}>-</button>
-                        </div>;
-                    })}
-                </div>
-                {cartItem.length ?
-                    <div className='text-zinc-700 text-2xl m-2 p-4' >
-                        Total: $ {total}
-                    </div> : <p className='p-5 text-2xl text-zinc-600'>Cart Is Empty</p>
-                }
-                <div >
-                    {cartItem.length ? <Button
-                        className="text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px] mx-4"
-                        variant={"destructive"}
-                        onClick={() => {
-                            dispatch(clearCart());
-                        }}
 
-                    >ClearCart</Button> : null}
-                    <button onClick={() => dispatch(requestPurchase(cartItem))}>request</button>
-                </div>
+                <CartItems
+                    cartItem={cartItem}
+                    handleDecreaseDispatch={handleDecreaseDispatch}
+                    handleIncreaseDispatch={handleIncreaseDispatch}
+                />
+
+                <Total cartItem={cartItem} />
+                <ClearCartComponent cartItem={cartItem} />
+
             </div >
 
         </>

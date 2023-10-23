@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/features/cart/cartSlice';
 import { v4 } from 'uuid';
 import Tags from './Tags';
+import AddToCartButton from './AddToCartButton';
 
 export const metadata: Metadata = {
     title: "Product page"
@@ -62,6 +63,7 @@ const ProductPage = ({ product }: { product: Products; }) => {
 
         <div className='flex items-center justify-center'>
             <Card className="container w-[90vw] p-2 m-2  shadow-md">
+
                 <CardHeader>
                     <CardTitle className="text-left font-bold text-3xl">{product.name}</CardTitle>
                     <div className="text-2xl text-zinc-700">Product Description</div>
@@ -73,35 +75,40 @@ const ProductPage = ({ product }: { product: Products; }) => {
                 <CardContent className="flex justify-center items-center">
                     <img className="rounded-md w-[500px] h-[300px] object-contain" src={product.imageUrl} width={360} height={360} alt="product image" />
                 </CardContent>
-                <div>
 
-                </div>
                 <CardContent>
                     <p className='text-3xl text-zinc-700 '>Price:  ${price?.toString()}</p>
                 </CardContent>
+
                 <CardFooter className="flex flex-col justify-start items-start gap-2">
                     <div>Rating: {product.rating.rating} / 5</div>
                     <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
 
-                    <div className=""> <h4 className='text-2xl text-zinc-800 '>Sizes: ({selectedSize.size})</h4>
-                        < Sizes selectedSize={selectedSize} quantity={product.quantity} setPrice={setPrice} setColorsArray={setColorsArray} setSelectedSize={setSelectedSize} />
-                    </div>
-                    {product.tags ? <div className="flex flex-col gap-1 items-start text-xl text-zinc-700">
-                        <span className='text-2xl text-zinc-900'>Tags:</span>  <Tags tags={product.tags} />
-                    </div> : null}
-                    <div className=''>
-                        <h4 className='text-xl text-zinc-800 '>Colors: ({selectedColor.color})</h4>
-                        <Colors selectedColor={selectedColor} quantity={colorsArray} setSelectedColor={setSelectedColor} />
-                    </div>
+                    <div className="">
+                        <h4 className='text-2xl text-zinc-800 '>Sizes: ({selectedSize.size})</h4>
 
-
-                    <Button className="bg-slate-900 text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px]"
+                        < Sizes
+                            selectedSize={selectedSize}
+                            quantity={product.quantity}
+                            setPrice={setPrice} setColorsArray={setColorsArray}
+                            setSelectedSize={setSelectedSize}
+                        />
+                        <Tags tags={product.tags} />
+                        <Colors
+                            selectedColor={selectedColor}
+                            quantity={colorsArray}
+                            setSelectedColor={setSelectedColor}
+                        />
+                    </div>
+                    <AddToCartButton
                         disabled={disabled}
-                        onClick={() => handleCartDispatch({ product })}
-                        variant={"secondary"}>Add to cart </Button>
+                        product={product}
+                        handleCartDispatch={handleCartDispatch}
+                    />
                 </CardFooter>
 
-            </Card></div>
+            </Card>
+        </div>
     );
 };
 

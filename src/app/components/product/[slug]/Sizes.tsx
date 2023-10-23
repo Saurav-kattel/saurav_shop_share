@@ -23,7 +23,7 @@ const Sizes = ({
             removeDuplicateSize({ products: quantity }).map((elem) => {
                 return <div key={elem.id} >
                     <button
-                        className={` flex justify-center items-center w-8 h-8 rounded-md ${selectedSize.size === elem.size ? "border-green-700 scale-110 shadow shadow-green-700" : null} hover:scale-110 border-zinc-400 border-[1px]`}
+                        className={` flex justify-center items-center w-8 h-8 rounded-md ${selectedSize.size === elem.size ? "border-green-700 scale-110 shadow shadow-green-700" : null} hover:scale-110 border-zinc-400 border-[1px] mx-1`}
                         onClick={() => {
                             setSelectedSize({
                                 size: elem.size,
