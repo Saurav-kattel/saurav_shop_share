@@ -24,6 +24,12 @@ model ProductRequest {
   requestedQuantity Int
   price             Float
   quantityId        String
+  firstname         String?
+  phoneNumber       String?
+  province          String?
+  userEmail         String?
+  zipcode           String?
+  lastname          String?
 }
 
 model Product {
