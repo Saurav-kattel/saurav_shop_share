@@ -1,15 +1,12 @@
 "üse client";
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, clearCart, removeItem, requestPurchase } from '@/redux/features/cart/cartSlice';
-import { Button } from '@/components/ui/button';
-import { ThunkDispatch } from '@reduxjs/toolkit';
+import React, { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Total from './Total';
 import ClearCartComponent from './ClearCartComponent';
 import CartItems from './CartItems';
-import Link from 'next/link';
 import { handleDecreaseDispatch } from '@/app/services/components/cart/handleDecreseDispach';
 import { handleIncreaseDispatch } from '@/app/services/components/cart/handleIncreaseDispatch';
+import CheckoutButton from './CheckoutButton';
 
 export type Items = {
     productId: string;
@@ -27,7 +24,7 @@ export type Items = {
 const CartComponent = () => {
     const cartItem = useSelector((state: any) => state.cart.cartItem);
     const cartRef = useRef<HTMLDivElement>(null);
-
+    const [pathname, setPathname] = useState("");
     function toggleCart() {
         if (cartRef.current?.classList.contains("translate-x-0")) {
             cartRef.current?.classList.remove("translate-x-0");
@@ -55,8 +52,16 @@ const CartComponent = () => {
                 />
 
                 <Total cartItem={cartItem} />
-                <ClearCartComponent cartItem={cartItem} />
-                <Link href={"/components/checkout"}>checkout</Link>
+                <div className="flex  justify-around">
+
+                    <ClearCartComponent
+                        cartItem={cartItem}
+                    />
+                    <CheckoutButton
+                        cartItem={cartItem}
+                        toggle={toggleCart}
+                    />
+                </div>
             </div >
 
         </>

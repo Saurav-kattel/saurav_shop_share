@@ -4,31 +4,26 @@ import React, { SetStateAction } from 'react';
 
 const CheckOutForm = ({ formData, setFormData }: {
     formData: {
-        email: string;
-        firstName: string;
-        lastName: string;
-        zipCode: string;
+        userEmail: string;
+        firstname: string;
+        lastname: string;
+        zipcode: string;
         province: string;
         phoneNumber: string;
     };
     setFormData: React.Dispatch<SetStateAction<{
-        email: string;
-        firstName: string;
-        lastName: string;
-        zipCode: string;
+        userEmail: string;
+        firstname: string;
+        lastname: string;
+        zipcode: string;
         province: string;
         phoneNumber: string;
     }>>;
 }) => {
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-
-        e.preventDefault();
-    }
     const selcetedprovince: string = ZipCodes[formData.province];
     return (
 
-        <form className='flex flex-col w-[35vw] border-r-[1px] border-zinc-300' onSubmit={(e) => handleSubmit(e)}
-        >
+        <form className='flex flex-col w-[35vw] border-r-[1px] border-zinc-300'  >
             <h2 className='text-center text-2xl font-bold uppercase p-4 text-zinc-600'>
                 Your Details
             </h2>
@@ -39,10 +34,10 @@ const CheckOutForm = ({ formData, setFormData }: {
                     <input type="text"
                         className='outline-none border-b-[1px] border-slate-600'
                         name='lastname'
-                        value={formData.firstName}
+                        value={formData.firstname}
                         onChange={(e) => {
                             setFormData((formData) => {
-                                return { ...formData, firstName: e.target.value };
+                                return { ...formData, firstname: e.target.value };
                             });
                         }} />
                 </label>
@@ -51,10 +46,10 @@ const CheckOutForm = ({ formData, setFormData }: {
                     <input type="text"
                         className='outline-none border-b-[1px] border-slate-600'
                         name='firstname'
-                        value={formData.lastName}
+                        value={formData.lastname}
                         onChange={(e) => {
                             setFormData((formData) => {
-                                return { ...formData, lastName: e.target.value };
+                                return { ...formData, lastname: e.target.value };
                             });
                         }} />
                 </label>
@@ -63,10 +58,10 @@ const CheckOutForm = ({ formData, setFormData }: {
                     <input type="email"
                         className='outline-none border-b-[1px] border-slate-600'
                         name='email'
-                        value={formData.email}
+                        value={formData.userEmail}
                         onChange={(e) => {
                             setFormData((formData) => {
-                                return { ...formData, email: e.target.value };
+                                return { ...formData, userEmail: e.target.value };
                             });
                         }} />
                 </label>
@@ -93,7 +88,7 @@ const CheckOutForm = ({ formData, setFormData }: {
                         className='outline-none border-b-[1px] border-slate-600'
                         onChange={(e) => {
                             setFormData((formData) => {
-                                return { ...formData, zipCode: e.target.value };
+                                return { ...formData, zipcode: e.target.value };
                             });
                         }}
                     >

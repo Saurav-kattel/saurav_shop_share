@@ -40,6 +40,12 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (ca
     productQuantity: number;
     price: number;
     quantityId: string;
+    firstname: string;
+    lastname: string;
+    province: string;
+    zipcode: string;
+    userEmail: string;
+    phoneNumber: string;
 }[]) => {
     const reqArray = cartItem.map((item) => ({
         color: item.color,
@@ -48,7 +54,13 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (ca
         size: item.size,
         price: item.price,
         userId: "",
-        quantityId: item.quantityId
+        quantityId: item.quantityId,
+        firstname: item.firstname,
+        lastname: item.lastname,
+        userEmail: item.userEmail,
+        province: item.province,
+        zipcode: item.zipcode,
+        phoneNumber: item.phoneNumber,
     }));
     const data = await fetch(`/api/product/request-purchase`, {
         method: "POST",
@@ -59,6 +71,7 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (ca
             cartItem: reqArray
         })
     });
+    console.log(data);
     return await data.json();
 });
 

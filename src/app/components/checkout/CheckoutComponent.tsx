@@ -15,10 +15,10 @@ import RequestProductPurchaseComponent from './RequestProductPurchaseComponent';
 const CheckoutComponent = () => {
     const cartItem = useSelector((state: any) => state.cart.cartItem);
     const [formData, setFormData] = useState({
-        email: "",
-        firstName: "",
-        lastName: "",
-        zipCode: Object.keys(ZipCodes.Koshi)[0].toString(),
+        userEmail: "",
+        firstname: "",
+        lastname: "",
+        zipcode: Object.keys(ZipCodes.Koshi)[0].toString(),
         province: provinces.Koshi,
         phoneNumber: "",
     });
@@ -40,7 +40,7 @@ const CheckoutComponent = () => {
 
                     <div className='flex items-center justify-center bg-white w-[33vw]'>
                         <ClearCartComponent cartItem={cartItem} />
-                        <RequestProductPurchaseComponent cartItem={cartItem} />
+                        <RequestProductPurchaseComponent cartItem={cartItem} userData={formData} />
                     </div>
                 </div>
 

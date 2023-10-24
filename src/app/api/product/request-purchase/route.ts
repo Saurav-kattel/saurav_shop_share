@@ -12,6 +12,11 @@ type TCartItem = {
     price: number;
     userId: string;
     quantityId: string;
+    lastname: string;
+    province: string;
+    zipcode: string;
+    userEmail: string;
+    phoneNumber: string;
 }[];
 export async function POST(req: Request) {
     const id = req.headers.get("auth");
