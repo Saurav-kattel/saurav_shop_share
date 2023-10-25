@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Button } from "@/components/ui/button";
 import { ZipCodes } from '../../services/components/checkout/zipcode';
 import { provinces } from '../../services/components/checkout/provinces';
 import CartItems from '../cart/CartItems';
@@ -14,7 +13,7 @@ import RequestProductPurchaseComponent from './RequestProductPurchaseComponent';
 
 const CheckoutComponent = () => {
     const cartItem = useSelector((state: any) => state.cart.cartItem);
-    const [formData, setFormData] = useState({
+    const [userData, setUserData] = useState({
         userEmail: "",
         firstname: "",
         lastname: "",
@@ -22,11 +21,16 @@ const CheckoutComponent = () => {
         province: provinces.Koshi,
         phoneNumber: "",
     });
+
+    const [showError, setShowErrors] = useState<{ showError: boolean, errors: Record<string, { message: string; }>; }>({
+        showError: false,
+        errors: {}
+    });
     const total = useSelector((state: any) => state.cart.total);
     return (
-        <div className='flex flex-warp  gap-1 items-baseline justify-between px-3 py-2 w-[75vw] mt-6 rounded-md border-[1px] border-zinc-400'>
+        <div className='flex flex-warp gap-1 items-baseline justify-between px-3 py-2 w-[75vw] mt-6 rounded-md border-[1px] border-zinc-400'>
 
-            <CheckOutForm setFormData={setFormData} formData={formData} />
+            <CheckOutForm setUserData={setUserData} userData={userData} setShowError={setShowErrors} showError={showError} />
 
             <div className='flex flex-col w-[35vw] overflow-y-scroll  items-center justify-center gap-1'>
                 <h2 className='text-center text-2xl font-bold uppercase p-4 text-zinc-600'>Cart Summary</h2>
@@ -40,7 +44,14 @@ const CheckoutComponent = () => {
 
                     <div className='flex items-center justify-center bg-white w-[33vw]'>
                         <ClearCartComponent cartItem={cartItem} />
-                        <RequestProductPurchaseComponent cartItem={cartItem} userData={formData} />
+                        <RequestProductPurchaseComponent
+                            setShowErrors={setShowErrors}
+                            cartItem={cartItem}
+                            userData={userData}
+                            setUserData={setUserData}
+                            showErrors={showError}
+                        />
+
                     </div>
                 </div>
 

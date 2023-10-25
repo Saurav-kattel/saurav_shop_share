@@ -1,12 +1,13 @@
 "use client";
 import { cartItemWithUserDetils } from '@/app/services/components/checkout/cartItemWithUserDetails';
+import { handleRequestPurcahse } from '@/app/services/components/checkout/handleRequestPurchase';
 import { Button } from '@/components/ui/button';
 import { clearCart, requestPurchase } from '@/redux/features/cart/cartSlice';
 import { ThunkDispatch } from '@reduxjs/toolkit';
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { SetStateAction } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const RequestProductPurchaseComponent = ({ cartItem, userData }: {
+const RequestProductPurchaseComponent = ({ cartItem, userData, setShowErrors, showErrors, setUserData }: {
     cartItem: any,
     userData: {
         firstname: string;
@@ -16,19 +17,38 @@ const RequestProductPurchaseComponent = ({ cartItem, userData }: {
         zipcode: string;
         userEmail: string;
     };
+    setShowErrors: React.Dispatch<SetStateAction<any>>;
+    setUserData: React.Dispatch<SetStateAction<any>>;
+    showErrors: {
+        showError: boolean;
+        errors: Record<string, {
+            message: string;
+        }>;
+    };
 }) => {
 
     if (cartItem.length) {
         const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
         const finalData = cartItemWithUserDetils({ cartItem, userDetails: userData });
-        console.log(finalData);
+        const purchaseRequestError = useSelector((state: any) => state.cart.error);
         return (
             <Button
                 className="bg-green-700 border-[1px] hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800"
                 onClick={() => {
-                    dispatch(requestPurchase(finalData));
-                    dispatch(clearCart());
-                }}
+                    handleRequestPurcahse({
+                        purchaseRequestError,
+                        finalData,
+                        clearCart,
+                        dispatch,
+                        requestPurchase,
+                        setShowErrors,
+                        userData,
+                        showErrors,
+                        setUserData
+                    });
+                }
+                }
+
                 variant={"destructive"}>Place Order</Button>
         );
     }
