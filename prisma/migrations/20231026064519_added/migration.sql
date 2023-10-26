@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "ProductRequest" ADD COLUMN     "requestedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

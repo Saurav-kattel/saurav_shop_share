@@ -6,5 +6,5 @@ export async function isAdmin({ email }: { email: string; }) {
     if (!user) {
         return false;
     }
-    return user.role === ADMIN;
+    return user.role.toLowerCase() === ADMIN;
 }

@@ -14,6 +14,7 @@ const NavBar = () => {
             <div className='flex gap-2'>
                 <NavItems name='home' link='/' />
                 <NavItems name='products' link='/components/product' />
+                <NavItems name='requestProducts' link='/components/admin/dashboard/purchase-requests' />
                 <Provider store={store}>
                     <Cart />
                 </Provider>

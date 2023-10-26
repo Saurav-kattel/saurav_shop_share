@@ -20,8 +20,10 @@ export async function GET(req: Request) {
         return response({ status: 401, res: { message: "unauthorized access" } });
     }
     const { GetRequestedProductError, data } = await getRequestedProduct();
+
     if (!data || GetRequestedProductError) {
         return response({ status: 500, res: { message: GetRequestedProductError } });
     }
+
     return response({ status: 200, res: { data } });
 }

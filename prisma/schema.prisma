@@ -12,11 +12,16 @@ model User {
   username String
   email    String @unique
   password String
-  role     String @default("user")
+  role     Role   @default(User)
+}
+
+enum Role {
+  User
+  Admin
 }
 
 model ProductRequest {
-  id                String  @id @default(uuid())
+  id                String   @id @default(uuid())
   userId            String
   productId         String?
   size              String
@@ -30,6 +35,14 @@ model ProductRequest {
   userEmail         String?
   zipcode           String?
   lastname          String?
+  status            Status   @default(Pending)
+  requestedAt       DateTime @default(now())
+}
+
+enum Status {
+  Pending
+  Success
+  Rejected
 }
 
 model Product {
