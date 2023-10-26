@@ -35,8 +35,6 @@ const CheckoutComponent = () => {
     const showErrorPopUp = (isClicked === true) && (Object.keys(purchaseRequestError).length !== 0);
     const purchaseRequestSucess = useSelector((state: any) => state.cart.success);
     const dispatch = useDispatch();
-
-    console.log(purchaseRequestSucess);
     useEffect(() => {
         if (isClicked) {
             setTimeout(() => {

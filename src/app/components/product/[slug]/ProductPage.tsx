@@ -26,15 +26,17 @@ export const metadata: Metadata = {
 
 const ProductPage = ({ product }: { product: Products; }) => {
     const [stockState] = useState(product && product.quantity.length > 0 ? "In Stock" : "Out Of Stock");
+    const inStock = product.quantity.length > 0;
     const [disabled] = useState(stockState === "Out Of Stock");
     const dispatch = useDispatch();
+
     const [selectedSize, setSelectedSize] = useState({
-        id: product.quantity[0].id,
-        size: product.quantity[0].size
+        id: inStock ? product.quantity[0].id : null,
+        size: inStock ? product.quantity[0].size : null
     });
     const [selectedColor, setSelectedColor] = useState({
-        id: product.quantity[0].id,
-        color: product.quantity[0].color
+        id: inStock ? product.quantity[0].id : null,
+        color: inStock ? product.quantity[0].color : null
     });
 
     const [price, setPrice] = useState(

@@ -65,7 +65,7 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (ca
     const data = await fetch(`/api/product/request-purchase`, {
         method: "POST",
         headers: {
-            auth: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWlsLmNvbSIsInVzZXJJZCI6ImQyYmMzZTc1LTJlZmMtNGFlOS1iMTdlLWFjZmU3NTExMzU3YiIsImlhdCI6MTY5ODMwMTQ3NCwic3ViIjoiZDJiYzNlNzUtMmVmYy00YWU5LWIxN2UtYWNmZTc1MTEzNTdiIn0.Fhlwwpk0TMq7w3RqJ7DP4CAuYxLbAHCjeCGT7dGCKFk"
+            auth: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWwuY29tIiwidXNlcklkIjoiZTg0NmFmODItYTNmZC00ZTBlLTg4NDgtY2E2Zjc5OTMyODUwIiwiaWF0IjoxNjk4MzI5MDYxLCJzdWIiOiJlODQ2YWY4Mi1hM2ZkLTRlMGUtODg0OC1jYTZmNzk5MzI4NTAifQ.o_qcj6D7A_WcMbzn8lQ1xSJ6RLCWmD4DYWf59dgebh8"
         },
         body: JSON.stringify({
             cartItem: reqArray

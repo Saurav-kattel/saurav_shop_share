@@ -24,8 +24,6 @@ export async function createProductRequest({ cartItem, userId }: {
                 item["userId"] = userId;
                 await prisma.productRequest.create({
                     data: { ...item }
-                }).catch((err) => {
-                    console.log(err);
                 });
             }
             return { success: true };

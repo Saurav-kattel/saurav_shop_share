@@ -1,4 +1,5 @@
 import { createProductRequest } from "@/app/services/api/product/createProductRequest";
+import { validatePurchase } from "@/app/services/api/product/validatePurchase";
 import { decodeToken } from "@/app/services/api/user/decodeToken";
 import { getUser } from "@/app/services/api/user/getUser";
 import { response } from "@/app/services/utils/response";
@@ -35,6 +36,7 @@ export async function POST(req: Request) {
     }
     const { cartItem } = await req.json();
     const { success, ProductRequestCreatonError, EmptyCartError } = await createProductRequest({ cartItem: cartItem as TCartItem, userId: user.id });
+    await validatePurchase();
     if (!success || ProductRequestCreatonError || EmptyCartError) {
         return response({ status: 500, res: { message: ProductRequestCreatonError || EmptyCartError } });
     }

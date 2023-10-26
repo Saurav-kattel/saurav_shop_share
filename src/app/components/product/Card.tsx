@@ -37,7 +37,7 @@ const CardComponent = ({ products }: { products: Products; }) => {
 
 
                 <CardFooter className="flex flex-col justify-start items-start">
-                    <div> Price:  $ {products.quantity[0].price.toString()} </div>
+                    <div> Price:  $ {products.quantity.length ? products.quantity[0].price.toString() : "$XX.XX"} </div>
                     <ShowSizes products={products} />
                     <ShowColors products={products} />
                     <div>Rating: {products.rating.rating} / 5</div>

@@ -8,10 +8,11 @@ const Colors = ({
     selectedColor
 }: {
     quantity: Products["quantity"];
-    setSelectedColor: React.Dispatch<SetStateAction<{ id: string, color: string; }>>;
-    selectedColor: { color: string, id: string; };
+    selectedColor: { color: string | null, id: string | null; };
+    setSelectedColor: React.Dispatch<SetStateAction<typeof selectedColor>>;
+
 }) => {
-    if (quantity) {
+    if (selectedColor.color !== null) {
         return (
             <>
                 <h4 className='text-xl text-zinc-800 '>Colors: ({selectedColor.color})</h4>

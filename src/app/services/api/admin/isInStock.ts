@@ -13,6 +13,6 @@ export async function isInStock({ quantityId }: { quantityId: string; }) {
         }
         return { IsInStock: quantity.total > 0 };
     } catch (err) {
-        return { IsInStockError: err };
+        return { IsInStockUnknownError: err };
     }
 }
