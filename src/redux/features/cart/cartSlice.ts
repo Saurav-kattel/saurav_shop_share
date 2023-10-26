@@ -24,7 +24,7 @@ const initialState: Record<string, any> = {
 };
 
 function calculateTotal({ cart }: { cart: CartState["cartItem"][]; }) {
-    let total = 0;
+    let total = 0.00;
     cart.map((items) => {
         let itemsTotalPrice = Number(items.price) * Number(items.productQuantity);
         total += itemsTotalPrice;
@@ -71,14 +71,17 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (ca
             cartItem: reqArray
         })
     });
-    console.log(data);
     return await data.json();
 });
 
-const cartSlice = createSlice({
+const cartSlice: any = createSlice({
     name: "cartSlice",
     initialState,
     reducers: {
+        resetResponseMessages: (state) => {
+            state.success = false;
+            state.error = {};
+        },
         addToCart: (state, action: { payload: CartState['cartItem']; }) => {
             if (!action.payload.totalQuantity) {
                 return;
@@ -147,6 +150,6 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const { addToCart, removeItem, clearCart } = cartSlice.actions;
+export const { addToCart, resetResponseMessages, removeItem, clearCart } = cartSlice.actions;
 
 export { requestPurchase };

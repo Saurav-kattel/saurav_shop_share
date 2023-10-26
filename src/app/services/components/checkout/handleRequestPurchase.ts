@@ -25,7 +25,6 @@ export type UserData = {
     userEmail: string;
 };
 export function handleRequestPurcahse({
-    purchaseRequestError,
     finalData,
     clearCart,
     dispatch,
@@ -35,7 +34,6 @@ export function handleRequestPurcahse({
     showErrors,
     setUserData
 }: {
-    purchaseRequestError: any;
     finalData: FinalData;
     clearCart: Function;
     dispatch: Function;
@@ -53,7 +51,7 @@ export function handleRequestPurcahse({
     const removeData: Record<string, string> = {};
     const errors = validataeUserData({ firstname: userData.firstname, lastname: userData.lastname, userEmail: userData.userEmail, phoneNumber: userData.phoneNumber });
 
-    if (Object.keys(errors).length <= 0) {
+    if (Object.keys(errors).length == 0) {
         dispatch(requestPurchase(finalData));
         dispatch(clearCart());
         resetUserData({ setUserData });

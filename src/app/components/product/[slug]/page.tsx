@@ -1,4 +1,3 @@
-import type { Products } from "../ProductComponent";
 import ProductPage from "./ProductPage";
 import Error from "../../utils/Error";
 
@@ -9,8 +8,9 @@ export default async function Page({ params }: { params: { slug: string; }; }) {
             method: "GET",
             headers: {
                 id
-            }
-        });
+            },
+            cache: "no-store"
+        },);
         return await res.json();
     }
     const product = await getProductById({ id: params.slug });
