@@ -8,7 +8,11 @@ export async function getProductById(id: string) {
             }, include: {
                 category: true,
                 rating: true,
-                quantity: true,
+                quantity: {
+                    where: {
+                        status: "InStock"
+                    }
+                },
             }
         });
         return { data };

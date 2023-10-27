@@ -4,6 +4,7 @@ export async function createProductRequest({ cartItem, userId }: {
     cartItem: {
         id: string,
         productId: string;
+        cartId: string;
         size: string;
         color: string;
         requestedQuantity: number;

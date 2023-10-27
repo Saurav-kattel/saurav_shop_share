@@ -6,12 +6,12 @@ export async function checkPartialOrderItem({ quantityId, requestedQuantity }: {
             id: quantityId
         }
     });
+
     if (!qunatity) {
         return { InvalidQunatityIdError: "Quantity Not Found" };
     }
 
     if (requestedQuantity > qunatity?.total) {
-        console.log(qunatity); //if req qun is grte ten total 
         return { IsPartialOrderRequest: true };
     } else {
         return { IsPartialOrderRequest: false };

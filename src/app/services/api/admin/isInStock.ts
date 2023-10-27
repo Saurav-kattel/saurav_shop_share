@@ -11,8 +11,8 @@ export async function isInStock({ quantityId }: { quantityId: string; }) {
         if (!quantity) {
             return { IsInStock: false };
         }
-        return { IsInStock: quantity.total > 0 };
+        return { IsInStock: quantity.status === "InStock" && quantity.total > 0 };
     } catch (err) {
-        return { IsInStockUnknownError: err };
+        return { IsInStockUnknownError: JSON.stringify(err) };
     }
 }

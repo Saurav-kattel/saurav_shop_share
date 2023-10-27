@@ -6,7 +6,11 @@ export async function getProducts() {
             include: {
                 category: true,
                 rating: true,
-                quantity: true,
+                quantity: {
+                    where: {
+                        status: "InStock"
+                    }
+                },
             }
         });
         return { product };

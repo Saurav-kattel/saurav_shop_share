@@ -48,6 +48,7 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (ca
     phoneNumber: string;
 }[]) => {
     const reqArray = cartItem.map((item) => ({
+        cartId: item.cartId,
         color: item.color,
         requestedQuantity: item.productQuantity,
         productId: item.productId,

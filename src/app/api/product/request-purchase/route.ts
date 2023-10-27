@@ -18,6 +18,7 @@ type TCartItem = {
     zipcode: string;
     userEmail: string;
     phoneNumber: string;
+    cartId: string;
 }[];
 export async function POST(req: Request) {
     const id = req.headers.get("auth");
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
     }
     const { cartItem } = await req.json();
     const { success, ProductRequestCreatonError, EmptyCartError } = await createProductRequest({ cartItem: cartItem as TCartItem, userId: user.id });
-    await validatePurchase();
+    await validatePurchase(); //hits an api endpoint to verify purchase request whuich handles most of the edge cases including out of stock and partial order req. It also handles  notificationss
     if (!success || ProductRequestCreatonError || EmptyCartError) {
         return response({ status: 500, res: { message: ProductRequestCreatonError || EmptyCartError } });
     }
