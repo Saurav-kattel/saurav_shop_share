@@ -1,12 +1,10 @@
 import { sendMail } from "@/app/services/api/admin/sendMail";
-import { createProductRequest } from "@/app/services/api/product/createProductRequest";
 import { handlePurchase } from "@/app/services/api/product/handlePurchase";
-import { validatePurchase } from "@/app/services/api/product/validatePurchase";
 import { decodeToken } from "@/app/services/api/user/decodeToken";
 import { getUser } from "@/app/services/api/user/getUser";
 import { response } from "@/app/services/utils/response";
 
-type TCartItem = {
+export type TCartItem = {
     id: string;
     productId: string;
     size: string;
@@ -22,7 +20,8 @@ type TCartItem = {
     userEmail: string;
     phoneNumber: string;
     cartId: string;
-}[];
+};
+//TODO: only need to send emails to user about thier requests 
 export async function POST(req: Request) {
     const token = req.headers.get("auth");
     const PurchaseRequestErrors: any[] = [];
@@ -41,7 +40,7 @@ export async function POST(req: Request) {
     }
     let email = '';
     const { cartItem } = await req.json();
-    for (let item of cartItem) {
+    for (let item of cartItem as TCartItem[]) {
         email = item.userEmail;
         let res = await handlePurchase({ item, userId: payload.userId as string });
         if (res.status !== 200) {
@@ -64,7 +63,6 @@ export async function POST(req: Request) {
     }
     if (PurchaseRequestSuccess.length > 0) {
         const { SendMailUnkownError, SendMailSuccess } = await sendMail({ message: "sucessfully purchased items" + JSON.stringify(PurchaseRequestErrors), email: email });
-
         if (!SendMailSuccess || SendMailUnkownError) {
             return response({ status: 500, res: { message: "Error Occured while sending email" } });
         }

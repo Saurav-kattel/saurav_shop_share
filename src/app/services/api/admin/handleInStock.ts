@@ -1,10 +1,11 @@
+import { TCartItem } from "@/app/api/product/request-purchase/route";
 import { createProductRequest } from "../product/createProductRequest";
 import { getQuantity } from "../product/getQuantity";
 import { accpetPurchaseRequest } from "./accpetPurchaseRequest";
 import { checkPartialOrderItem } from "./checkPartialOrderItem";
 import { handleFreezeQuantity } from "./handleFreezeQuantity";
 
-export async function handleInStock({ item, userId, quantityTotal }: { item: any, userId: string, quantityTotal: number; }) {
+export async function handleInStock({ item, userId, quantityTotal }: { item: TCartItem, userId: string, quantityTotal: number; }) {
 
     const { Quantity, InvalidQuantityIdError, GetQuanitiyUnknownError } = await getQuantity(item.quantityId);
 
