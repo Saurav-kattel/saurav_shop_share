@@ -1,17 +1,10 @@
-import prisma from "../../utils/prisma";
 
-export async function checkPartialOrderItem({ quantityId, requestedQuantity }: { quantityId: string; requestedQuantity: number; }) {
-    const qunatity = await prisma.qunatity.findFirst({
-        where: {
-            id: quantityId
-        }
-    });
-
-    if (!qunatity) {
+export async function checkPartialOrderItem({ quantity, requestedQuantity }: { quantity: any; requestedQuantity: number; }) {
+    if (!quantity) {
         return { InvalidQunatityIdError: "Quantity Not Found" };
     }
 
-    if (requestedQuantity > qunatity?.total) {
+    if (requestedQuantity > quantity?.total) {
         return { IsPartialOrderRequest: true };
     } else {
         return { IsPartialOrderRequest: false };

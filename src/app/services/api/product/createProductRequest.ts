@@ -1,7 +1,7 @@
 import prisma from "../../utils/prisma";
 
-export async function createProductRequest({ cartItem, userId }: {
-    cartItem: {
+export async function createProductRequest({ item, userId }: {
+    item: {
         id: string,
         productId: string;
         cartId: string;
@@ -12,26 +12,26 @@ export async function createProductRequest({ cartItem, userId }: {
         quantityId: string;
         userId: string;
         lastname: string;
+        firstname: string;
         province: string;
         zipcode: string;
         userEmail: string;
         phoneNumber: string;
-    }[];
+    };
     userId: string;
 }) {
-    if (cartItem.length > 0) {
-        try {
-            for (let item of cartItem) {
-                item["userId"] = userId;
-                await prisma.productRequest.create({
-                    data: { ...item }
-                });
-            }
-            return { success: true };
-        } catch (err: any) {
-            return { ProductRequestCreatonError: err };
+
+    try {
+        item["userId"] = userId;
+        const newPurchaseRequest = await prisma.productRequest.create({
+            data: item
+        });
+        if (!newPurchaseRequest) {
+            return { ProductPurchaseRequestError: "Error While Creating A Purchase Request" };
         }
-    } else {
-        return { EmptyCartError: "cart is empty" };
+        return { CreatedPurchaseRequest: true };
+    } catch (err: any) {
+        return { ProductRequestUnknownError: err.message };
     }
+
 }

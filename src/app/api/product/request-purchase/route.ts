@@ -1,4 +1,6 @@
+import { sendMail } from "@/app/services/api/admin/sendMail";
 import { createProductRequest } from "@/app/services/api/product/createProductRequest";
+import { handlePurchase } from "@/app/services/api/product/handlePurchase";
 import { validatePurchase } from "@/app/services/api/product/validatePurchase";
 import { decodeToken } from "@/app/services/api/user/decodeToken";
 import { getUser } from "@/app/services/api/user/getUser";
@@ -9,6 +11,7 @@ type TCartItem = {
     productId: string;
     size: string;
     color: string;
+    firstname: string;
     requestedQuantity: number;
     price: number;
     userId: string;
@@ -21,12 +24,13 @@ type TCartItem = {
     cartId: string;
 }[];
 export async function POST(req: Request) {
-    const id = req.headers.get("auth");
-
-    if (!id) {
+    const token = req.headers.get("auth");
+    const PurchaseRequestErrors: any[] = [];
+    const PurchaseRequestSuccess: any[] = [];
+    if (!token) {
         return response({ status: 400, res: { message: "auth token not found" } });
     }
-    const { payload, JwtDecodeError } = await decodeToken(id);
+    const { payload, JwtDecodeError } = await decodeToken(token);
 
     if (JwtDecodeError || !payload) {
         return response({ status: 500, res: { message: JwtDecodeError } });
@@ -35,11 +39,37 @@ export async function POST(req: Request) {
     if (!user) {
         return response({ status: 400, res: { message: "user not found" } });
     }
+    let email = '';
     const { cartItem } = await req.json();
-    const { success, ProductRequestCreatonError, EmptyCartError } = await createProductRequest({ cartItem: cartItem as TCartItem, userId: user.id });
-    await validatePurchase(); //hits an api endpoint to verify purchase request whuich handles most of the edge cases including out of stock and partial order req. It also handles  notificationss
-    if (!success || ProductRequestCreatonError || EmptyCartError) {
-        return response({ status: 500, res: { message: ProductRequestCreatonError || EmptyCartError } });
+    for (let item of cartItem) {
+        email = item.userEmail;
+        let res = await handlePurchase({ item, userId: payload.userId as string });
+        if (res.status !== 200) {
+            PurchaseRequestErrors.push({ itemName: item, res: res });
+        } else {
+            PurchaseRequestSuccess.push({ itemName: item, res: res });
+        }
     }
-    return response({ status: 200, res: { success } });
+
+    if (PurchaseRequestErrors.length > 0) {
+
+        const { SendMailUnkownError, SendMailSuccess } = await sendMail({ message: "Errors Regarding Purchase " + JSON.stringify(PurchaseRequestErrors), email: email });
+
+
+        if (!SendMailSuccess || SendMailUnkownError) {
+            return response({ status: 500, res: { message: "Error Occured while sending email" } });
+        }
+
+        return response({ status: 200, res: { message: "mail sucessfully sent " } });
+    }
+    if (PurchaseRequestSuccess.length > 0) {
+        const { SendMailUnkownError, SendMailSuccess } = await sendMail({ message: "sucessfully purchased items" + JSON.stringify(PurchaseRequestErrors), email: email });
+
+        if (!SendMailSuccess || SendMailUnkownError) {
+            return response({ status: 500, res: { message: "Error Occured while sending email" } });
+        }
+        return response({ status: 200, res: { message: "mail sucessfully sent " } });
+    }
+
+    return response({ status: 500, res: { message: "Unknown Error Occured" } });
 }

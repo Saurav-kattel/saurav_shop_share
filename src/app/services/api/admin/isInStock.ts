@@ -12,7 +12,7 @@ export async function isInStock({ quantityId }: { quantityId: string; }) {
             return { IsInStock: false };
         }
         return { IsInStock: quantity.status === "InStock" && quantity.total > 0 };
-    } catch (err) {
-        return { IsInStockUnknownError: JSON.stringify(err) };
+    } catch (err: any) {
+        return { IsInStockUnknownError: err.message };
     }
 }

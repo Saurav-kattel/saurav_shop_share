@@ -16,13 +16,10 @@ export async function sendMail({ message, email }: { message: string; email: str
             html: message
         };
 
-        let res = await transport.sendMail(mailOptions);
-        if (res.rejected) {
-            return { MailRejected: "email has been rejected" };
-        }
+        await transport.sendMail(mailOptions);
         return { SendMailSuccess: true };
 
     } catch (err: any) {
-        return { SendMailUnkownError: err };
+        return { SendMailUnkownError: err.message };
     }
 }

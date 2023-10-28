@@ -23,21 +23,22 @@ enum Role {
 model ProductRequest {
   id                String   @id @default(uuid())
   userId            String
-  productId         String?
-  size              String
-  color             String
+  productId         String
   requestedQuantity Int
-  price             Float
+  product           Product  @relation(fields: [productId], references: [id])
   quantityId        String
-  firstname         String?
-  phoneNumber       String?
-  province          String?
-  userEmail         String?
-  zipcode           String?
-  lastname          String?
+  color             String
+  price             Float
+  size              String
+  firstname         String
+  phoneNumber       String
+  province          String
+  userEmail         String
+  zipcode           String
+  lastname          String
   status            Status   @default(Pending)
   requestedAt       DateTime @default(now())
-  cartId            String?
+  cartId            String
 }
 
 enum Availability {
@@ -53,17 +54,18 @@ enum Status {
 }
 
 model Product {
-  id          String     @id @default(uuid())
-  name        String
-  description String
-  imageUrl    String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  ratingId    String     @unique
-  tags        String[]
-  category    Category[]
-  rating      Rating     @relation(fields: [ratingId], references: [id])
-  quantity    Qunatity[]
+  id             String           @id @default(uuid())
+  name           String
+  description    String
+  imageUrl       String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  ratingId       String           @unique
+  tags           String[]
+  category       Category[]
+  rating         Rating           @relation(fields: [ratingId], references: [id])
+  quantity       Qunatity[]
+  ProductRequest ProductRequest[]
 }
 
 model Category {
@@ -84,7 +86,7 @@ model Qunatity {
   total     Int
   productId String?
   color     String?
-  size      String?
+  size      String
   price     Float?
   status    Availability @default(InStock)
   Product   Product?     @relation(fields: [productId], references: [id])

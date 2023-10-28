@@ -1,19 +1,18 @@
 import prisma from "../../utils/prisma";
 
-export async function rejectPurchaseRequest({ purchaseProductId }: { purchaseProductId: string; }) {
+export async function rejectPurchaseRequest({ purchaseProductData, userId }: { purchaseProductData: any; userId: string; }) {
     try {
-        let product = await prisma.productRequest.update({
-            where: {
-                id: purchaseProductId
-            },
+        let product = await prisma.productRequest.create({
             data: {
+                ...purchaseProductData,
+                userId,
                 status: "Rejected"
             }
         });
         if (!product) {
-            return { PurchaseProductIdNotFound: "Product with this quantity is not found" };
+            return { RejcectingPurchaseRequestFailed: "Error Creating Product Request" };
         }
-        return { RejectedRequestSuccess: true };
+        return { RejectedPurchaseRequest: true };
     } catch (err: any) {
         return { RejectPurchaseRequestUnknownError: err };
     }

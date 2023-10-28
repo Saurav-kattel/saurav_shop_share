@@ -31,7 +31,7 @@ const RequestProductPurchaseComponent = ({ cartItem, userData, setShowErrors, sh
         const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
         const finalData = cartItemWithUserDetils({ cartItem, userDetails: userData });
         const purchaseRequestError = useSelector((state: any) => state.cart.error);
-
+        console.log(purchaseRequestError);
         return (
             <>
                 <Button

@@ -11,18 +11,14 @@ const Page = async () => {
     let showError = false;
     async function fetchProducts() {
         const res = await fetch(`${process.env.BASE_URL}/api/product/get-product`, { cache: "no-store", });
-        if (!res.ok) {
-            showError = true;
-        }
-        else {
-            return res.json();
-        }
+        return await res.json();
     }
     const data = await fetchProducts();
+    console.log("data", data.res);
     if (!showError) {
         return (
             <>
-                <ProductComponent products={data.res.product} />
+                <ProductComponent products={data.res["product"]} />
             </>
         );
     }
