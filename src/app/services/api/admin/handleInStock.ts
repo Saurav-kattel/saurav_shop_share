@@ -5,7 +5,7 @@ import { accpetPurchaseRequest } from "./accpetPurchaseRequest";
 import { checkPartialOrderItem } from "./checkPartialOrderItem";
 import { handleFreezeQuantity } from "./handleFreezeQuantity";
 
-export async function handleInStock({ item, userId, quantityTotal }: { item: TCartItem, userId: string, quantityTotal: number; }) {
+export async function handleInStock({ item, userId, quantityTotal }: { item: any, userId: string, quantityTotal: number; }) {
 
     const { Quantity, InvalidQuantityIdError, GetQuanitiyUnknownError } = await getQuantity(item.quantityId);
 
@@ -48,7 +48,6 @@ export async function handleInStock({ item, userId, quantityTotal }: { item: TCa
     const { PurchaseSuccessfull, PurchaseRequestUnknownError } = await accpetPurchaseRequest({ item, userId, quantityTotal });
 
     if (!PurchaseSuccessfull || PurchaseRequestUnknownError) {
-        console.log(PurchaseRequestUnknownError);
         return { status: 500, res: { message: PurchaseRequestUnknownError } };
     }
     return { status: 200, res: { PurchaseSuccessfull: true } };

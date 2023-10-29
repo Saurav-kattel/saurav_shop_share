@@ -13,6 +13,6 @@ export function handleIncreaseDispatch({ product, dispatch }: { product: Items; 
         price: product.price,
         productQuantity: Number(product.productQuantity),
         totalQuantity: Number(product.totalQuantity),
-        quantityId: product.quantityId
+        quantityId: product.quantityId,
     }));
 }

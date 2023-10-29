@@ -12,6 +12,8 @@ export function cartItemWithUserDetils({ cartItem, userDetails }: {
     const detailsArray: {
         cartId: string,
         productId: string;
+        productName: string;
+        imageUrl: string;
         size: string;
         color: string;
         productQuantity: number;
@@ -29,6 +31,8 @@ export function cartItemWithUserDetils({ cartItem, userDetails }: {
         detailsArray.push({
             cartId: item.cartId,
             productId: item.productId,
+            productName: item.productName,
+            imageUrl: item.imageUrl,
             size: item.size,
             color: item.color,
             productQuantity: item.productQuantity,
