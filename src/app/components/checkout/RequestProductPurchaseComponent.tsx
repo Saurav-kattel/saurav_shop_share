@@ -30,11 +30,14 @@ const RequestProductPurchaseComponent = ({ cartItem, userData, setShowErrors, sh
     if (cartItem.length) {
         const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
         const finalData = cartItemWithUserDetils({ cartItem, userDetails: userData });
-        console.log(finalData);
+        const loading = useSelector((state: any) => state.cart.requestPending);
+        const success = useSelector((state: any) => state.cart.success);
+        console.log(success);
         return (
             <>
                 <Button
                     className="bg-green-700 border-[1px] hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800"
+                    disabled={loading}
                     onClick={() => {
                         handleRequestPurcahse({
                             finalData,
@@ -52,7 +55,7 @@ const RequestProductPurchaseComponent = ({ cartItem, userData, setShowErrors, sh
                         }, 500);
                     }}
 
-                    variant={"destructive"}>Place Order</Button >
+                    variant={"destructive"}>{loading ? "request sending...." : "place order"}</Button >
             </>
 
         );

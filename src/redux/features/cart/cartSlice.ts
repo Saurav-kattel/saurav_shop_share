@@ -19,7 +19,7 @@ const initialState: Record<string, any> = {
     total: 0,
     cartItem: [],
     requestPending: false,
-    success: false,
+    success: {},
     error: {}
 };
 
@@ -84,7 +84,7 @@ const cartSlice: any = createSlice({
     initialState,
     reducers: {
         resetResponseMessages: (state) => {
-            state.success = false;
+            state.success = {};
             state.error = {};
         },
         addToCart: (state, action: { payload: CartState['cartItem']; }) => {
@@ -142,14 +142,14 @@ const cartSlice: any = createSlice({
             })
             .addCase(requestPurchase.rejected, (state, action) => {
                 state.error = action.error;
-                state.success = false;
+                state.success = {};
                 state.requestPending = false;
 
             })
-            .addCase(requestPurchase.fulfilled, (state) => {
+            .addCase(requestPurchase.fulfilled, (state, action) => {
                 state.error = {};
                 state.requestPending = false;
-                state.success = true;
+                state.success = action.payload;
             });
     },
 });

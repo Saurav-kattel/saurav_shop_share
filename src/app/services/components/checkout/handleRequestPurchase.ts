@@ -53,9 +53,9 @@ export function handleRequestPurcahse({
 
     if (Object.keys(errors).length == 0) {
         dispatch(requestPurchase(finalData));
-        dispatch(clearCart());
+        // dispatch(clearCart());
         resetUserData({ setUserData });
-        setShowErrors({ showErrors: false, errors: {} });
+        // setShowErrors({ showErrors: false, errors: {} });
 
     } else {
         setShowErrors({
