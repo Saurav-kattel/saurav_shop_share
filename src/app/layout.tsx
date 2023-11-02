@@ -4,7 +4,9 @@ import './globals.css';
 import type { Metadata } from 'next';;
 import NavBar from './components/navbar/NavBar';
 import React from 'react';
-;
+import { ClientCookiesProvider } from './components/utils/CookieClinetProvider';
+import { cookies } from 'next/headers';
+
 
 export const metadata: Metadata = {
   title: 'Saurav shop',
@@ -14,8 +16,11 @@ export const metadata: Metadata = {
 function App({ children }: { children: React.ReactNode; }) {
   "use client";
   return <>
-    <NavBar />
-    {children}
+    <ClientCookiesProvider value={cookies().getAll()}>
+      <NavBar />
+      {children}
+    </ClientCookiesProvider>
+
   </>;
 }
 export default function RootLayout({
@@ -27,7 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <App >
+          <App  >
             {children}
           </App>
         </Providers>

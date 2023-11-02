@@ -7,15 +7,15 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     const { email, password } = await req.json();
     if (!email) {
-        return response({ status: 400, res: { message: "Email not found" } });
+        return response({ status: 400, res: { message: "Invalid Email" } });
     }
     if (password < 6) {
-        return response({ status: 400, res: { message: "Weak Password" } });
+        return response({ status: 400, res: { message: "Wrong Password" } });
     }
     const user = await getUser({ email });
 
     if (!user) {
-        return response({ status: 400, res: { message: "User not Found" } });
+        return response({ status: 400, res: { message: "Invalid Email" } });
     }
 
     const { isCorrectPassword, verificationError } = await verifyPassword({ hash: user.password, password });

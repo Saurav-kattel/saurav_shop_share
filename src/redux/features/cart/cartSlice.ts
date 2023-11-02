@@ -15,6 +15,23 @@ export type CartState = {
 
     };
 };
+export type CartVal = {
+    cartId: string,
+    productId: string;
+    size: string;
+    color: string;
+    productQuantity: number;
+    price: number;
+    quantityId: string;
+    firstname: string;
+    lastname: string;
+    province: string;
+    zipcode: string;
+    userEmail: string;
+    phoneNumber: string;
+    productName: string;
+    imageUrl: string;
+}[];
 const initialState: Record<string, any> = {
     total: 0,
     cartItem: [],
@@ -32,23 +49,7 @@ function calculateTotal({ cart }: { cart: CartState["cartItem"][]; }) {
     return total.toFixed(2);
 }
 
-const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (cartItem: {
-    cartId: string,
-    productId: string;
-    size: string;
-    color: string;
-    productQuantity: number;
-    price: number;
-    quantityId: string;
-    firstname: string;
-    lastname: string;
-    province: string;
-    zipcode: string;
-    userEmail: string;
-    phoneNumber: string;
-    productName: string;
-    imageUrl: string;
-}[]) => {
+const requestPurchase = createAsyncThunk("products/addtorequestqueue", async ({ cartItem, auth }: { cartItem: CartVal, auth: string; }) => {
     const reqArray = cartItem.map((item) => ({
         cartId: item.cartId,
         productName: item.productName,
@@ -70,7 +71,7 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async (ca
     const data = await fetch(`/api/product/request-purchase`, {
         method: "POST",
         headers: {
-            auth: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWwuY29tIiwidXNlcklkIjoiODc1ODU1MTctMDgzZC00Y2YzLThjNWEtNTEwOTc3YzM4OTA4IiwiaWF0IjoxNjk4NTAzOTY4LCJzdWIiOiI4NzU4NTUxNy0wODNkLTRjZjMtOGM1YS01MTA5NzdjMzg5MDgifQ.Bsv2Vt7Zqwef6KHc1jHPGpsQoveiAXwIHvuIdO82wXo"
+            auth: auth
         },
         body: JSON.stringify({
             cartItem: reqArray

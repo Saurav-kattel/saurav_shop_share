@@ -4,5 +4,7 @@ import store from "@/redux/app/store";
 import { ReactNode } from "react";
 
 export default function Providers({ children }: { children: ReactNode; }) {
-    return <Provider store={store} >{children}</Provider>;
+    return <Provider store={store} >
+        {children}
+    </Provider>;
 }

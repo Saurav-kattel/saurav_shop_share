@@ -13,7 +13,7 @@ import { resetResponse } from '@/app/services/components/checkout/resetResponse'
 import { resetResponseMessages } from '@/redux/features/cart/cartSlice';
 
 
-const CheckoutComponent = () => {
+const CheckoutComponent = ({ auth }: { auth: string; }) => {
     const [isClicked, setIsClicked] = useState(false);
     const [userData, setUserData] = useState({
         userEmail: "",
@@ -35,6 +35,7 @@ const CheckoutComponent = () => {
     const showErrorPopUp = (isClicked === true) && (Object.keys(purchaseRequestError).length !== 0);
     const purchaseRequestSucess = useSelector((state: any) => state.cart.success);
     const dispatch = useDispatch();
+
     useEffect(() => {
         if (isClicked) {
             setTimeout(() => {
@@ -45,7 +46,8 @@ const CheckoutComponent = () => {
 
     return (
         <div className='flex flex-warp gap-1 items-baseline justify-between px-3 py-2 w-[75vw] mt-6 rounded-md border-[1px] border-zinc-400'>
-            <CheckOutForm setUserData={setUserData} userData={userData} setShowError={setShowErrors} showError={showError} />
+            <CheckOutForm
+                setUserData={setUserData} userData={userData} setShowError={setShowErrors} showError={showError} />
 
             <div className='flex flex-col w-[35vw] overflow-y-scroll  items-center justify-center gap-1'>
                 <h2 className='text-center text-2xl font-bold uppercase p-4 text-zinc-600'>Cart Summary</h2>
@@ -62,6 +64,7 @@ const CheckoutComponent = () => {
                         <ClearCartComponent cartItem={cartItem} />
 
                         <RequestProductPurchaseComponent
+                            auth={auth}
                             setShowErrors={setShowErrors}
                             cartItem={cartItem}
                             userData={userData}

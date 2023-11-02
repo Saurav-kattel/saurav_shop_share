@@ -1,11 +1,12 @@
 import RequestedProducts from './RequestedProducts';
+import { cookies } from 'next/headers';
 
 const page = async () => {
     const getProducts = async () => {
         const res = await fetch(`${process.env.BASE_URL}/api/admin/get-pending-purchase-request`, {
             headers: {
                 method: "GET",
-                auth: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImthdHRlbHNhdXJhdjMyQGdtYWwuY29tIiwidXNlcklkIjoiODc1ODU1MTctMDgzZC00Y2YzLThjNWEtNTEwOTc3YzM4OTA4IiwiaWF0IjoxNjk4NTAzOTY4LCJzdWIiOiI4NzU4NTUxNy0wODNkLTRjZjMtOGM1YS01MTA5NzdjMzg5MDgifQ.Bsv2Vt7Zqwef6KHc1jHPGpsQoveiAXwIHvuIdO82wXo"
+                auth: cookies().get("auth")?.value ?? ''
             },
             cache: "no-store"
         });

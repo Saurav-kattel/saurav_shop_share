@@ -25,7 +25,6 @@ export type TCartItem = {
 export async function POST(req: Request) {
     const token = req.headers.get("auth");
 
-
     const PurchaseRequestErrors: any[] = [];
     const PurchaseRequestSuccess: any[] = [];
     const PartialRequestOrder: any[] = [];
@@ -48,7 +47,7 @@ export async function POST(req: Request) {
     let email = '';
 
     const { cartItem } = await req.json();
-    console.log(cartItem);
+
     for (let item of cartItem as TCartItem[]) {
         email = item.userEmail;
         let { status, res } = await handlePurchase({ item, userId: payload.userId as string });
@@ -73,9 +72,8 @@ export async function POST(req: Request) {
     console.log("PurchaseRequestErrors", PurchaseRequestErrors);
 
     if (PurchaseRequestRejected.length > 0) {
-
         const { SendMailUnkownError, SendMailSuccess } = await sendMail({
-            message: `Purchase  For Following Products Was Rejected becasue of  Errors or Item being out of stock and you have not been charged for these products: 
+            message: `<h2>Purchase  For Following Products Was Rejected becasue of  Errors or Item being out of stock and you have not been charged for these products</h2>: 
         cartId: ${PurchaseRequestRejected[0].cartId}
         ${PurchaseRequestErrors.map((item) => `
         <h2>${item.productName}</h2>
@@ -97,7 +95,7 @@ export async function POST(req: Request) {
     if (PurchaseRequestErrors.length > 0) {
 
         const { SendMailUnkownError, SendMailSuccess } = await sendMail({
-            message: `Purchase  For Following Products Was Unsuccessfull becasue of the Error and you have not been charged for these products: 
+            message: `<h2>Purchase  For Following Products Was Unsuccessfull becasue of the Error and you have not been charged for these products</h2>: 
         cartId: ${PurchaseRequestErrors[0].cartId}
         ${PurchaseRequestErrors.map((item) => `
         <h2>${item.productName}</h2>
@@ -121,7 +119,7 @@ export async function POST(req: Request) {
     if (PurchaseRequestSuccess.length > 0) {
 
         const { SendMailUnkownError, SendMailSuccess } = await sendMail({
-            message: `Your order for follownig items was successfull for cartId: ${PurchaseRequestSuccess[0].cartId}:
+            message: `<h1>Your order for follownig items was successfull for cartId: ${PurchaseRequestSuccess[0].cartId} </h1>:
               ${PurchaseRequestSuccess.map((item) => {
                 return `
             <div>

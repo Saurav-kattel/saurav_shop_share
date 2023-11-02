@@ -32,7 +32,8 @@ export function handleRequestPurcahse({
     setShowErrors,
     userData,
     showErrors,
-    setUserData
+    setUserData,
+    auth
 }: {
     finalData: FinalData;
     clearCart: Function;
@@ -40,6 +41,7 @@ export function handleRequestPurcahse({
     requestPurchase: Function;
     setShowErrors: React.Dispatch<SetStateAction<any>>;
     userData: UserData;
+    auth: string;
     showErrors: {
         showError: boolean;
         errors: Record<string, {
@@ -52,7 +54,7 @@ export function handleRequestPurcahse({
     const errors = validataeUserData({ firstname: userData.firstname, lastname: userData.lastname, userEmail: userData.userEmail, phoneNumber: userData.phoneNumber });
 
     if (Object.keys(errors).length == 0) {
-        dispatch(requestPurchase(finalData));
+        dispatch(requestPurchase({ cartItem: finalData, auth: auth }));
         // dispatch(clearCart());
         resetUserData({ setUserData });
         // setShowErrors({ showErrors: false, errors: {} });

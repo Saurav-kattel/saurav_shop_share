@@ -6,8 +6,8 @@ import { clearCart, requestPurchase } from '@/redux/features/cart/cartSlice';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import React, { SetStateAction, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-const RequestProductPurchaseComponent = ({ cartItem, userData, setShowErrors, showErrors, setUserData, setIsClicked }: {
+const RequestProductPurchaseComponent = ({ auth, cartItem, userData, setShowErrors, showErrors, setUserData, setIsClicked }: {
+    auth: string,
     cartItem: any,
     userData: {
         firstname: string;
@@ -32,7 +32,6 @@ const RequestProductPurchaseComponent = ({ cartItem, userData, setShowErrors, sh
         const finalData = cartItemWithUserDetils({ cartItem, userDetails: userData });
         const loading = useSelector((state: any) => state.cart.requestPending);
         const success = useSelector((state: any) => state.cart.success);
-        console.log(success);
         return (
             <>
                 <Button
@@ -47,6 +46,7 @@ const RequestProductPurchaseComponent = ({ cartItem, userData, setShowErrors, sh
                             setShowErrors,
                             userData,
                             showErrors,
+                            auth: auth,
                             setUserData
                         });
                         setIsClicked(true);
