@@ -66,11 +66,6 @@ export async function POST(req: Request) {
 
     }
 
-    console.log("PartialRequestOrder", PartialRequestOrder);
-    console.log("PurchaseRequestRejected", PurchaseRequestRejected);
-    console.log("PurchaseRequestSuccess", PurchaseRequestSuccess);
-    console.log("PurchaseRequestErrors", PurchaseRequestErrors);
-
     if (PurchaseRequestRejected.length > 0) {
         const { SendMailUnkownError, SendMailSuccess } = await sendMail({
             message: `<h2>Purchase  For Following Products Was Rejected becasue of  Errors or Item being out of stock and you have not been charged for these products</h2>: 

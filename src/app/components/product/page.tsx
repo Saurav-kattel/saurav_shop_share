@@ -14,7 +14,6 @@ const Page = async () => {
         return await res.json();
     }
     const data = await fetchProducts();
-    console.log("data", data.res);
     if (!showError) {
         return (
             <>

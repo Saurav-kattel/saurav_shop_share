@@ -1,7 +1,6 @@
 import prisma from "../../utils/prisma";
 
 export async function accpetPurchaseRequest({ item, userId, quantityTotal }: { item: any; userId: string; quantityTotal: number; }) {
-    console.log("called");
     try {
         if (quantityTotal === 1) {
             try {
