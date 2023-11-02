@@ -8,7 +8,7 @@ import { isLoggedIn } from '@/app/services/components/user/isLoggedIn';
 const NavBar = () => {
     const loggedIn = isLoggedIn();
     return (
-        <div className='flex px-6  bg-white shadow-lg h-16 justify-between items-center gap-1 sticky top-0'>
+        <div className='flex z-10    px-6  bg-white shadow-lg h-16 justify-between items-center gap-1 sticky top-0'>
             <div className=""></div>
             <div className='flex gap-2'>
                 <NavItems name='home' link='/' />

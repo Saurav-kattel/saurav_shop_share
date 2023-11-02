@@ -20,23 +20,23 @@ const CardComponent = ({ products }: { products: Products; }) => {
     const [disabled] = useState(stockState === "Out Of Stock");
 
     return (
-        <Card className="container w-[40vw] p-0  shadow-md">
+        <Card className="container w-[20vw] h-[90vh] p-0 shadow-md">
             <Link href={"/components/product/" + products.id}>
 
                 <CardHeader>
                     <CardTitle className="text-left font-bold text-3xl">{products.name}</CardTitle>
                     <div className="text-2xl text-zinc-700">Product Description</div>
                     <CardDescription>
-                        {products.description}
+                        {products.description.slice(0, 60)}...
                     </CardDescription>
                 </CardHeader>
 
                 <CardContent className="flex justify-center flex-col items-center">
-                    <img className="rounded-md w-[300px] h-[300px] object-contain" src={products.imageUrl} width={360} height={360} alt="product image" />
+                    <img className="rounded-md object-contain h-[20vh] w-[30vw]" src={products.imageUrl} alt="product image" />
                 </CardContent>
 
 
-                <CardFooter className="flex flex-col justify-start items-start">
+                <CardFooter className="flex flex-col justify-between items-start h-[25vh]">
                     <div> Price:  $ {products.quantity.length ? products.quantity[0].price.toString() : "$XX.XX"} </div>
                     <ShowSizes products={products} />
                     <ShowColors products={products} />
@@ -46,8 +46,8 @@ const CardComponent = ({ products }: { products: Products; }) => {
 
             </Link>
 
-            <CardFooter className="flex flex-col justify-start items-start">
-                <Button className="bg-slate-900 text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px]"
+            <CardFooter className="flex flex-col  justify-end items-start">
+                <Button className="bg-slate-900   text-white text-center hover:bg-white  hover:scale-110 hover:text-slate-900 hover:border-slate-800 border-[1px]"
                     disabled={disabled}
                     variant={"secondary"}>Add to cart </Button>
             </CardFooter>
