@@ -1,16 +1,18 @@
 import React, { SetStateAction } from "react";
-
-export async function handleLogin({ loginData, setLoading, setLoginData, setResponse, e }: {
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+export async function handleLogin({ loginData, router, setLoading, setLoginData, setResponse, e }: {
     loginData: {
         email: string,
         password: string;
     };
     setLoginData: React.Dispatch<SetStateAction<typeof loginData>>;
-    setResponse: React.Dispatch<SetStateAction<{ res: { message?: string, success?: boolean; }; } | undefined>>;
+    setResponse: React.Dispatch<SetStateAction<{ res: { message?: string, success?: boolean; }; }>>;
     e: React.FormEvent;
     setLoading: React.Dispatch<SetStateAction<boolean>>;
+    router: AppRouterInstance;
 }) {
     e.preventDefault();
+
     setLoading(true);
     const response = await fetch("/api/user/login", {
         method: "POST",
@@ -22,6 +24,8 @@ export async function handleLogin({ loginData, setLoading, setLoginData, setResp
     const data = await response.json();
     setResponse(data);
     setLoading(false);
+
+
     setTimeout(() => {
         setResponse({
             res: {
@@ -30,11 +34,16 @@ export async function handleLogin({ loginData, setLoading, setLoginData, setResp
             }
         });
         setLoginData((loginData) => {
-            if (data.res.message.includes("Email")) {
+            if (data.res && data.res.message.includes("Email")) {
                 return { ...loginData, email: "", password: "" };
+            } else if (data.res && data.res.message.includes("Password")) {
+                return { ...loginData, password: "" };
             }
-            return { ...loginData, password: "" };
+            return { ...loginData, email: "", password: "" };
         });
-    }, 3000);
+        if (data.success) {
+            router.push("/");
+        }
+    }, 2500);
 
 };
