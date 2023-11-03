@@ -1,9 +1,10 @@
 "use client";
 import { handleRegister } from '@/app/services/components/user/handleRegister';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 export type RegisterData = { username: string, email: string, password: string, confirmPassword: string; };
-export type Response = { res: { message?: string, success?: boolean; validationError?: { field: string, message: string; }[]; }; };
+export type Response = { success?: boolean; res?: { message?: string, validationError?: { field: string, message: string; }[]; }; };
 const RegisterForm = () => {
     const [registerData, setRegisterData] = useState<RegisterData>({
         username: '',
@@ -15,16 +16,16 @@ const RegisterForm = () => {
     const [response, setResponse] = useState<Response>({
         res: {
             message: undefined,
-            success: undefined,
             validationError: undefined
-        }
+        },
+        success: undefined,
     });
     const [loading, setLoading] = useState(false);
-    console.log(registerData);
+    const router = useRouter();
     return (
         <div>
             <form onSubmit={async (e) => {
-                await handleRegister({ e, setLoading, registerData, setResponse, setRegisterData });
+                await handleRegister({ e, setLoading, router, registerData, setResponse, setRegisterData });
             }}>
                 <label>
                     <fieldset>

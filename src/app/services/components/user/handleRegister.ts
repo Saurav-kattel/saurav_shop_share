@@ -1,17 +1,20 @@
 import { RegisterData, Response } from "@/app/components/user/register/RegisterForm";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export async function handleRegister({
     e,
     setResponse,
     setRegisterData,
     setLoading,
-    registerData
+    registerData,
+    router
 }: {
     e: React.FormEvent,
     setResponse: React.Dispatch<React.SetStateAction<Response>>;
     setRegisterData: React.Dispatch<React.SetStateAction<RegisterData>>;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     registerData: RegisterData;
+    router: AppRouterInstance;
 
 }) {
     e.preventDefault();
@@ -26,8 +29,9 @@ export async function handleRegister({
     });
 
     const data = await res.json();
-    setLoading(false);
     setResponse(data);
+    setLoading(false);
+
 
     setRegisterData(registerData => {
         const newRegisteredData: any = {};
@@ -63,4 +67,15 @@ export async function handleRegister({
         return { ...registerData, ...newRegisteredData };
 
     });
+
+    setTimeout(() => {
+        setResponse({
+            res: undefined,
+            success: undefined
+        });
+        if (data.success) {
+            router.push("/");
+        }
+    }, 2500);
+
 }

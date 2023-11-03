@@ -25,6 +25,15 @@ export async function handleLogin({ loginData, router, setLoading, setLoginData,
     setResponse(data);
     setLoading(false);
 
+    setLoginData((loginData) => {
+        if (data.res && data.res.message.includes("Email")) {
+            return { ...loginData, email: "", password: "" };
+        } else if (data.res && data.res.message.includes("Password")) {
+            return { ...loginData, password: "" };
+        }
+        return { ...loginData, email: "", password: "" };
+    });
+
 
     setTimeout(() => {
         setResponse({
@@ -33,14 +42,7 @@ export async function handleLogin({ loginData, router, setLoading, setLoginData,
                 success: false
             }
         });
-        setLoginData((loginData) => {
-            if (data.res && data.res.message.includes("Email")) {
-                return { ...loginData, email: "", password: "" };
-            } else if (data.res && data.res.message.includes("Password")) {
-                return { ...loginData, password: "" };
-            }
-            return { ...loginData, email: "", password: "" };
-        });
+
         if (data.success) {
             router.push("/");
         }
