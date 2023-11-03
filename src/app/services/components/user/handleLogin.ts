@@ -24,7 +24,6 @@ export async function handleLogin({ loginData, router, setLoading, setLoginData,
     const data = await response.json();
     setResponse(data);
     setLoading(false);
-
     setLoginData((loginData) => {
         if (data.res && data.res.message.includes("Email")) {
             return { ...loginData, email: "", password: "" };

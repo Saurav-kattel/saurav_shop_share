@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 import { handleLogin } from '@/app/services/components/user/handleLogin';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const LoginForm = () => {
     const [loginData, setLoginData] = useState({
@@ -83,7 +84,7 @@ const LoginForm = () => {
                 </form>
                 <p className='cursor-pointer'>forgot password</p>
                 <span>Or</span>
-                <p>Dont have an account? <strong className='cursor-pointer'>Register</strong></p>
+                <p>Dont have an account? <strong className='cursor-pointer'><Link href={"/components/user/register"}>Register</Link></strong></p>
             </div>
         </div >
     );
