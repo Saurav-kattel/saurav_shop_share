@@ -11,11 +11,11 @@ export async function POST(req: Request) {
     const { username, email, password } = await req.json();
     const validation = validate({ username, email, password });
     if (validation.length > 0) {
-        return response({ status: 400, res: validation });
+        return response({ status: 400, res: { validationError: validation } });
     }
     const isDuplicateUser = await getUser({ email });
     if (isDuplicateUser) {
-        return response({ status: 401, res: { message: "user already exists" } });
+        return response({ status: 401, res: { message: "Invalid Email" } });
     }
     const { hashError, hash } = generateHash(password);
     if (hashError || !hash) {
