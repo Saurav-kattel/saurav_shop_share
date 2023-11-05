@@ -34,6 +34,10 @@ export async function handleLogin({ loginData, router, setLoading, setLoginData,
     });
 
 
+    if (data.success) {
+        router.push("/");
+        router.refresh();
+    }
     setTimeout(() => {
         setResponse({
             res: {
@@ -42,9 +46,6 @@ export async function handleLogin({ loginData, router, setLoading, setLoginData,
             }
         });
 
-        if (data.success) {
-            router.push("/");
-        }
     }, 2500);
 
 };

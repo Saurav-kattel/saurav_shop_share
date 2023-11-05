@@ -5,21 +5,20 @@ type User = {
 };
 
 export function validate({ username, email, password }: User) {
-    const errors = [];
     if (!username) {
-        errors.push({ field: "username", message: "username undefined" });
+        return { field: "username", message: "invalid usernmae" };
     }
     if (!email) {
-        errors.push({ field: "email", message: "email undefined" });
+        return { field: "email", message: "invalid email" };
     }
     if (!password) {
-        errors.push({ field: "password", message: "password undefined" });
+        return { field: "password", message: "invalid password" };
     }
     if (password && password?.length <= 5) {
-        errors.push({ field: "password", message: "password must be greater then 5 or equal to 6" });
+        return { field: "password", message: "weak password" };
     }
     if (!email?.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")) {
-        errors.push({ field: "email", message: "provided email is invalid" });
+        return { field: "email", message: " invalid email" };
     }
-    return errors;
+
 }

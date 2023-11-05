@@ -15,7 +15,6 @@ export async function handleRegister({
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     registerData: RegisterData;
     router: AppRouterInstance;
-
 }) {
     e.preventDefault();
     setLoading(true);
@@ -32,33 +31,32 @@ export async function handleRegister({
     setResponse(data);
     setLoading(false);
 
-
     setRegisterData(registerData => {
         const newRegisteredData: any = {};
+
         if (data && data.success) {
             return { confirmPassword: "", username: "", email: "", password: '' };
         }
 
         if (data.res && data.res.validationError) {
-            data.res.validationError.map((item: any) => {
-                if (item.field == "password") {
-                    newRegisteredData.password = '';
-                    newRegisteredData.confirmPassword = '';
+            if (data.res.validationError.field == "password") {
+                newRegisteredData.password = '';
+                newRegisteredData.confirmPassword = '';
 
-                }
-                if (item.field == "username") {
-                    newRegisteredData.username = '';
-                }
-                if (item.field == "email") {
-                    newRegisteredData.email == '';
-                    newRegisteredData.password = '';
-                    newRegisteredData.confirmPassword = '';
-                }
-            });
+            }
+            if (data.res.validationError.field == "username") {
+                newRegisteredData.username = '';
+            }
+
+            if (data.res.validationError.field == "email") {
+                newRegisteredData.email == '';
+                newRegisteredData.password = '';
+                newRegisteredData.confirmPassword = '';
+            }
             return { ...registerData, ...newRegisteredData };
         }
 
-        if (data.res && data.res.message.includes("Email")) {
+        if (data.res && data.res.message.includes("email")) {
             newRegisteredData.email = '';
             newRegisteredData.password = '';
             newRegisteredData.confirmPassword = '';
@@ -67,15 +65,16 @@ export async function handleRegister({
         return { ...registerData, ...newRegisteredData };
 
     });
-
+    if (data.success) {
+        router.push("/");
+        router.refresh();
+    }
     setTimeout(() => {
         setResponse({
             res: undefined,
             success: undefined
         });
-        if (data.success) {
-            router.push("/");
-        }
+
     }, 2500);
 
 }

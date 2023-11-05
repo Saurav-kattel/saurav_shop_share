@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 export type RegisterData = { username: string, email: string, password: string, confirmPassword: string; };
-export type Response = { success?: boolean; res?: { message?: string, validationError?: { field: string, message: string; }[]; }; };
+export type Response = { success?: boolean; res?: { message?: string, validationError?: { field: string, message: string; }; }; };
 const RegisterForm = () => {
     const [registerData, setRegisterData] = useState<RegisterData>({
         username: '',
@@ -35,10 +35,12 @@ const RegisterForm = () => {
                     }}
                 >
                     <label>
-                        <fieldset className='border-[1px] border-zinc-800 rounded px-2 py-2'>
-                            <legend className='text-center font-bold text-zinc-500 px-2'> Username</legend>
+                        <fieldset className={`border-[1px] ${response.res && ((response.res.message && response.res.message.includes("username")) || (response.res.validationError && response.res.validationError.field === "username")) ? "border-red-700 text-red-700" : "border-zinc-800 text-zinc-500"} rounded-md  px-2 py-1`}>
+                            <legend className='text-center font-bold p-1'>
+                                {response.res && (response.res.validationError && response.res.validationError.field === 'username') ? <div>invalid username</div> : "Username"}
+                            </legend>
                             <input
-                                className='outline-none bg-transparent  underline underline-offset-2 font-light text-zinc-400 px-2 w-[25vw]'
+                                className='outline-none bg-transparent  underline underline-offset-2 font-light  px-2 w-[25vw]'
                                 type="text"
                                 value={registerData.username}
                                 onChange={(e) => {
@@ -50,11 +52,15 @@ const RegisterForm = () => {
                         </fieldset>
                     </label>
                     <label>
-                        <fieldset className='border-[1px] border-zinc-800 rounded px-2 py-2'>
-                            <legend className='text-center font-bold text-zinc-500 px-2'> Email</legend>
+                        <fieldset className={`border-[1px] ${response.res && ((response.res.message && response.res.message.includes("email")) || (response.res.validationError && response.res.validationError.field === "email")) ? "border-red-700 text-red-700" : "border-zinc-800 text-zinc-500"} rounded-md px-2 py-1`}>
+                            <legend className='text-center font-bold px-2'>
+                                {response.res && ((response.res.message && response.res.message.includes("email")) || (response.res.validationError && response.res.validationError.field === "email")) ? <div>
+                                    invalid email
+                                </div> : "Email"}
+                            </legend>
 
                             <input
-                                className='outline-none bg-transparent  underline underline-offset-2 font-light text-zinc-400 px-2 w-[25vw]'
+                                className='outline-none bg-transparent  underline underline-offset-2 font-light px-2 w-[25vw]'
                                 type="email"
                                 value={registerData.email}
                                 onChange={(e) => {
@@ -66,11 +72,13 @@ const RegisterForm = () => {
                         </fieldset>
                     </label>
                     <label>
-                        <fieldset className='border-[1px] border-zinc-800 rounded px-2 py-2'>
-                            <legend className='text-center font-bold text-zinc-500 px-2'> Password</legend>
+                        <fieldset className={`border-[1px] ${response.res && ((response.res.message && response.res.message.includes("password")) || (response.res.validationError && response.res.validationError.field === "password")) ? "border-red-700 text-red-700" : "border-zinc-800 text-zinc-500"} border-zinc-800 rounded-md px-2 py-1`}>
+                            <legend className='text-center font-bold  px-2'>  {response.res && ((response.res.message && response.res.message.includes("password")) || (response.res.validationError && response.res.validationError.field === "password")) ? <div>
+                                weak passowrd
+                            </div> : "Password"}</legend>
 
                             <input
-                                className='outline-none bg-transparent  underline underline-offset-2 font-light text-zinc-400 px-2 w-[25vw]'
+                                className={`outline-none bg-transparent  underline underline-offset-2 font-light  px-2 w-[25vw]`}
                                 type="password"
                                 value={registerData.password}
                                 onChange={(e) => {
@@ -82,11 +90,10 @@ const RegisterForm = () => {
                         </fieldset>
                     </label>
                     <label>
-                        <fieldset className='border-[1px] border-zinc-800 rounded px-2 py-2'>
-                            <legend className='text-center font-bold text-zinc-500 px-2'> Confirm Password</legend>
-
+                        <fieldset className={`border-[1px] border-zinc-800 rounded-md px-2 py-1`}>
+                            <legend className='text-center text-zinc-500 font-bold px-2'> Confirm Password</legend>
                             <input
-                                className='outline-none bg-transparent  underline underline-offset-2 font-light text-zinc-400 px-2 w-[25vw]'
+                                className='outline-none bg-transparent text-zinc-500 underline underline-offset-2 font-light  px-2 w-[25vw]'
                                 type="password"
                                 value={registerData.confirmPassword}
                                 onChange={(e) => {
@@ -98,7 +105,7 @@ const RegisterForm = () => {
                         </fieldset>
                     </label>
                     <div className="">
-                        {loading ? <span className='w-[14vw] h-[6.5vh] text-center   mt-4'>Loding...</span> : <Button className="bg-slate-900 text-white text-center hover:bg-zinc-200   hover:scale-110 hover:text-slate-900 w-[14vw] mt-4 hover:border-slate-800 border-[1px]" variant={"secondary"}>register </Button>}
+                        {loading ? <div className='w-[14vw] h-[6vh] p-4 text-center   mt-4'>Loding...</div> : <Button className="bg-slate-900 text-white text-center hover:bg-zinc-200   hover:scale-110 hover:text-slate-900 w-[14vw] h-[6vh] mt-4 hover:border-slate-800 border-[1px]" variant={"secondary"}>register </Button>}
                     </div>
                 </form>
             </div>
@@ -106,4 +113,4 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm;
+export default RegisterForm;    

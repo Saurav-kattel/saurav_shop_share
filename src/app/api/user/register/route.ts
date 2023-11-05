@@ -10,12 +10,12 @@ import { createUser } from "@/app/services/api/user/createuser";
 export async function POST(req: Request) {
     const { username, email, password } = await req.json();
     const validation = validate({ username, email, password });
-    if (validation.length > 0) {
+    if (validation) {
         return response({ status: 400, res: { validationError: validation } });
     }
     const isDuplicateUser = await getUser({ email });
     if (isDuplicateUser) {
-        return response({ status: 401, res: { message: "Invalid Email" } });
+        return response({ status: 401, res: { message: "Invalid email" } });
     }
     const { hashError, hash } = generateHash(password);
     if (hashError || !hash) {
