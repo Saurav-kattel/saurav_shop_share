@@ -1,7 +1,7 @@
 import prisma from "../../utils/prisma";
-type GetMethod = { email?: string, username?: string, id?: string; };
+type GetMethod = { email?: string, username?: string, id?: string; withPassword?: boolean; };
 
-export async function getUser({ email, username, id }: GetMethod) {
+export async function getUser({ email, username, id, withPassword = true }: GetMethod) {
     let fieldData: GetMethod = {};
     if (email) {
         fieldData["email"] = email;
@@ -14,7 +14,15 @@ export async function getUser({ email, username, id }: GetMethod) {
     let user = await prisma.user.findFirst({
         where: {
             ...fieldData
+        },
+        select: {
+            username: true,
+            email: true,
+            role: true,
+            password: withPassword,
+            id: true,
         }
     });
     return user;
+
 }
