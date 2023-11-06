@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ZipCodes } from '../../services/components/checkout/zipcode';
-import { provinces } from '../../services/components/checkout/provinces';
 import CartItems from '../cart/CartItems';
 import { handleDecreaseDispatch } from '@/app/services/components/cart/handleDecreseDispach';
 import { handleIncreaseDispatch } from '@/app/services/components/cart/handleIncreaseDispatch';
@@ -11,6 +9,8 @@ import ClearCartComponent from '../cart/ClearCartComponent';
 import RequestProductPurchaseComponent from './RequestProductPurchaseComponent';
 import { resetResponse } from '@/app/services/components/checkout/resetResponse';
 import { resetResponseMessages } from '@/redux/features/cart/cartSlice';
+import { ZipCodes } from '@/app/services/components/checkout/zipcode';
+import { provinces } from '@/app/services/components/checkout/provinces';
 
 
 const CheckoutComponent = ({ auth }: { auth: string; }) => {

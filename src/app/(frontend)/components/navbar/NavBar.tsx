@@ -22,7 +22,7 @@ const NavBar = () => {
             <div className='flex gap-2'>
                 <NavItems name='home' link='/' />
                 <NavItems name='products' link='/components/product' />
-                {isAdmin ? <NavItems name='requestProducts' link='/components/admin/dashboard/purchase-requests' /> : null}
+                {isAdmin ? <NavItems name='requestProducts' link='/admin' /> : null}
                 {!loggedIn ? <NavItems name='login or register' link='/components/user/login' /> : null}
                 <Provider store={store}>
                     <Cart />
