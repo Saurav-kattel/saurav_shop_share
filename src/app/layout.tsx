@@ -1,11 +1,11 @@
 
-import Providers from '@/app/components/utils/Provider';
 import './globals.css';
 import type { Metadata } from 'next';;
-import NavBar from './components/navbar/NavBar';
 import React from 'react';
-import { ClientCookiesProvider } from './components/utils/CookieClinetProvider';
 import { cookies } from 'next/headers';
+import { ClientCookiesProvider } from './(frontend)/components/utils/CookieClinetProvider';
+import NavBar from './(frontend)/components/navbar/NavBar';
+import Providers from './(frontend)/components/utils/Provider';
 
 
 export const metadata: Metadata = {
