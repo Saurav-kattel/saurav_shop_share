@@ -1,6 +1,9 @@
 import React, { SetStateAction } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-export async function handleLogin({ loginData, router, setLoading, setLoginData, setResponse, e }: {
+import { checkIsAdmin } from "@/redux/features/admin/adminSlice";
+import { useCookies } from "next-client-cookies";
+
+export async function handleLogin({ loginData, router, setLoading, setLoginData, setResponse, e, dispatch }: {
     loginData: {
         email: string,
         password: string;
@@ -10,6 +13,7 @@ export async function handleLogin({ loginData, router, setLoading, setLoginData,
     e: React.FormEvent;
     setLoading: React.Dispatch<SetStateAction<boolean>>;
     router: AppRouterInstance;
+    dispatch: Function;
 }) {
     e.preventDefault();
 

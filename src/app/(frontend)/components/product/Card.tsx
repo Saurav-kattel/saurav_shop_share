@@ -20,7 +20,7 @@ const CardComponent = ({ products }: { products: Products; }) => {
     const [disabled] = useState(stockState === "Out Of Stock");
 
     return (
-        <Card className="container w-[20vw] h-[90vh] p-0 shadow-md">
+        <Card className="container w-[20vw] h-[90vh] p-0 shadow-sm shadow-rose-700">
             <Link href={"/components/product/" + products.id}>
 
                 <CardHeader>

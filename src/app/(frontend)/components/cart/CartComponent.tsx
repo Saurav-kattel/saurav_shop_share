@@ -37,7 +37,7 @@ const CartComponent = () => {
     }
     return (
         <>
-            <section onClick={toggleCart}>
+            <section className='text-white font-bold hover:border-b-[1px] hover:border-rose-400 hover:text-rose-400' onClick={toggleCart}>
                 CART
             </section>
 

@@ -13,12 +13,14 @@ const checkIsAdmin = createAsyncThunk("checkIsAdmin", async (auth: string) => {
 const adminSlice = createSlice({
     name: "admin-slice",
     initialState: {
-        isAdmin: false
+        isAdmin: false,
+        username: ''
     }, reducers: {},
     extraReducers: builder => {
         builder.addCase(checkIsAdmin.fulfilled, (state, action) => {
             if (action.payload.res && action.payload.res.user && action.payload.res.user.role === "Admin") {
                 state.isAdmin = true;
+                state.username = action.payload.res.user.username;
             }
 
         });

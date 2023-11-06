@@ -1,9 +1,13 @@
 import React from 'react';
+import SideNav from './SideNav';
 
 const SideBar = () => {
     return (
-        <div>SideBar</div>
+        <div className='bg-slate-800 shadow-pink-700  shadow-inner'>
+            <SideNav />
+        </div>
+
     );
 };
 
-export default SideBar;
+export default SideBar;;

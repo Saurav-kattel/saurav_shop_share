@@ -4,15 +4,15 @@ import { Metadata } from 'next';
 import Error from '../utils/Error';
 
 export const metadata: Metadata = {
-    title: 'Online Shopping',
+    title: 'Products - available products',
 };
-
+async function fetchProducts() {
+    const res = await fetch(`${process.env.BASE_URL}/api/product/get-product`, { cache: "no-store", });
+    return await res.json();
+}
 const Page = async () => {
     let showError = false;
-    async function fetchProducts() {
-        const res = await fetch(`${process.env.BASE_URL}/api/product/get-product`, { cache: "no-store", });
-        return await res.json();
-    }
+
     const data = await fetchProducts();
     if (!showError) {
         return (

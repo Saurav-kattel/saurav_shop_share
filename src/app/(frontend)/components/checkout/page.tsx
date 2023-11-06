@@ -1,6 +1,11 @@
 import React from 'react';
 import CheckoutComponent from './CheckoutComponent';
 import { cookies } from 'next/headers';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Checkout Page",
+};
 
 const page = () => {
     const auth = cookies().get("auth")?.value ?? '';

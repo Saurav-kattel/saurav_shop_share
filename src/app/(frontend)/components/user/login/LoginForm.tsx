@@ -4,12 +4,15 @@ import React, { useState } from 'react';
 import { handleLogin } from '@/app/services/components/user/handleLogin';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
 const LoginForm = () => {
     const [loginData, setLoginData] = useState({
         email: "",
         password: ""
     });
+    const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState<{ res: { message?: string | undefined, success?: boolean; }; }>({
         res: {
@@ -23,7 +26,7 @@ const LoginForm = () => {
             <div className='flex flex-col shadow-xl w-[85vw] py-5  justify-center items-center gap-1'>
                 <h1 className='text-4xl  text-center text-zinc-500 p-4'>Welcome</h1>
                 <p className='text-center p-2 text-zinc-600'>Login in with email</p>
-                <form className=' flex flex-col justify-center items-center gap-1 w-[30vw] outline-none' onSubmit={async (e) => await handleLogin({ e, setLoginData, router, setResponse, setLoading, loginData })
+                <form className=' flex flex-col justify-center items-center gap-1 w-[30vw] outline-none' onSubmit={async (e) => await handleLogin({ e, setLoginData, router, setResponse, setLoading, dispatch, loginData })
                 }>
                     <label className='flex flex-col gap-1'>
                         <fieldset className={`border-[1px] rounded-lg px-2 py-1

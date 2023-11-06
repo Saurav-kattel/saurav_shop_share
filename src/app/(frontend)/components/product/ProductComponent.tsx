@@ -27,7 +27,7 @@ export type Products = {
 
 const ProductComponent = ({ products }: { products: Products[]; }) => {
     return (
-        <div className='flex flex-wrap gap-2 bg-zinc-300 rounded-md  p-4 justify-center items-center'>
+        <div className='flex flex-wrap gap-14 bg-slate-700  p-4 justify-center items-center'>
             {products.map((product) => {
                 return <div key={product.id}><CardComponent products={product} /></div>;
             })

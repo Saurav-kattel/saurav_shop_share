@@ -15,5 +15,5 @@ export async function GET(req: Request) {
     if (!user) {
         return response({ status: 404, res: { message: "user not found" } });
     }
-    return response({ status: 200, res: { user: { role: user.role } } });
+    return response({ status: 200, res: { user } });
 }

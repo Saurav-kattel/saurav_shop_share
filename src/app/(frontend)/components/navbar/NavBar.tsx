@@ -1,23 +1,23 @@
 "use client";
-import React, { useMemo, useState } from 'react';
 import NavItems from './NavItems';
 import Cart from '../cart/Cart';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from '@/redux/app/store';
 import { isLoggedIn } from '@/app/services/components/user/isLoggedIn';
-import { useCookies } from 'next-client-cookies';
 import { checkIsAdmin } from '@/redux/features/admin/adminSlice';
+import { useCookies } from 'next-client-cookies';
 import { ThunkDispatch } from '@reduxjs/toolkit';
+import { useMemo } from 'react';
 const NavBar = () => {
     const loggedIn = isLoggedIn();
-    const cookies = useCookies();
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const isAdmin = useSelector((state: any) => state.admin.isAdmin);
+    const cookie = useCookies().get("auth") ?? "";
     useMemo(() => {
-        dispatch(checkIsAdmin(cookies.get("auth") || ''));
-    }, []);
+        dispatch(checkIsAdmin(cookie));
+    }, [cookie]);
     return (
-        <div className='flex z-10    px-6  bg-white shadow-lg h-16 justify-between items-center gap-1 sticky top-0'>
+        <div className='flex z-10   px-6 shadow-sm bg-slate-800 h-16 justify-between items-center gap-1 sticky top-0'>
             <div className=""></div>
             <div className='flex gap-2'>
                 <NavItems name='home' link='/' />

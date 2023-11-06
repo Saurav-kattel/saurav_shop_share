@@ -8,6 +8,8 @@ export async function getRequestedProduct() {
             },
             orderBy: {
                 requestedAt: "asc"
+            }, include: {
+                product: true
             }
         });
         return { data };

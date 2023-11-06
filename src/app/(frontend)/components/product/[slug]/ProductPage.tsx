@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Products } from '../ProductComponent';
 
 import {
@@ -61,10 +61,13 @@ const ProductPage = ({ product }: { product: Products; }) => {
     }
 
     const [colorsArray, setColorsArray] = useState(product.quantity.filter((items) => selectedSize.size === items.size));
+    useMemo(() => {
+        setSelectedColor({ id: colorsArray[0].id, color: colorsArray[0].color });
+    }, [colorsArray]);
     return (
 
-        <div className='flex items-center justify-center'>
-            <Card className="container w-[90vw] p-2 m-2  shadow-md">
+        <div className='flex items-center bg-slate-800 justify-center'>
+            <Card className="container bg-zinc-400 w-[90vw] p-2 m-2  shadow-sm shadow-rose-400">
 
                 <CardHeader>
                     <CardTitle className="text-left font-bold text-3xl">{product.name}</CardTitle>
@@ -87,9 +90,10 @@ const ProductPage = ({ product }: { product: Products; }) => {
                     <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
 
                     <div className="">
-                        <h4 className='text-2xl text-zinc-800 '>Sizes: ({selectedSize.size})</h4>
 
                         < Sizes
+                            setSelectedColor={setSelectedColor}
+                            colorsArray={colorsArray}
                             selectedSize={selectedSize}
                             quantity={product.quantity}
                             setPrice={setPrice} setColorsArray={setColorsArray}
