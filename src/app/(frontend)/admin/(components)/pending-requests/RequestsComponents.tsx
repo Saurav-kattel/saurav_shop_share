@@ -1,5 +1,7 @@
-import { TCartItem } from '@/app/(backend)/api/product/request-purchase/route';
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
+import RejectOrderButton from './RejectOrderButton';
+import AcceptOrderButton from './AcceptOrderButton';
 
 interface Product {
     id: string;
@@ -12,7 +14,7 @@ interface Product {
     tags: string[];
 }
 
-interface CartItem {
+export interface CartItem {
     id: string;
     userId: string;
     productId: string;
@@ -32,7 +34,19 @@ interface CartItem {
     cartId: string;
     product: Product;
 }
+
 const RequestsComponents = ({ data }: { data: CartItem[]; }) => {
+
+
+    if (data.length <= 0) {
+        return (
+            <div className='flex items-center p-0 m-0  w-full h-[110vh] justify-center bg-slate-900 '>
+                <div className='container flex items-center justify-center rounded-lg w-full  h-[20vh] '>
+                    <h2 className='text-2xl text-center text-white font-bold'>No pending requests..</h2>
+                </div>
+            </div>
+        );
+    }
     return (
         <div>{data.map((item) => {
             return <div key={item.id} className=' bg-white m-4 flex flex-col items-center justify-center  p-4 shadow-sm shadow-rose-300 rounded-lg w-[60vw]  h-[150vh]'>
@@ -53,6 +67,12 @@ const RequestsComponents = ({ data }: { data: CartItem[]; }) => {
                         <span className='py-[0.1rem] text-md font-medium'> Size: {item.size}</span>
                         <span className='py-[0.1rem] text-md font-medium'> Total: ${item.price * item.requestedQuantity}</span>
                     </div>
+                    <div className='flex flex-wrap justify-around p-2 m-4 items-center'>
+
+                        <AcceptOrderButton item={item} />
+                        <RejectOrderButton item={item} />
+                    </div>
+
                 </div>
             </div>;
         })}</div>

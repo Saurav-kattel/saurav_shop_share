@@ -10,7 +10,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Metadata } from 'next';
 import Sizes from './Sizes';
 import Colors from './Colors';
@@ -19,6 +18,8 @@ import { addToCart } from '@/redux/features/cart/cartSlice';
 import { v4 } from 'uuid';
 import Tags from './Tags';
 import AddToCartButton from './AddToCartButton';
+import { ErrorBoundary } from 'react-error-boundary';
+import Error from '../../utils/Error';
 
 export const metadata: Metadata = {
     title: "Product page"
@@ -59,62 +60,66 @@ const ProductPage = ({ product }: { product: Products; }) => {
         dispatch(addToCart(payloadValue));
 
     }
-
     const [colorsArray, setColorsArray] = useState(product.quantity.filter((items) => selectedSize.size === items.size));
     useMemo(() => {
-        setSelectedColor({ id: colorsArray[0].id, color: colorsArray[0].color });
+        if (colorsArray.length > 0) {
+            setSelectedColor({ id: colorsArray[0].id, color: colorsArray[0].color });
+        }
     }, [colorsArray]);
     return (
+        <ErrorBoundary fallback={<Error />}>
 
-        <div className='flex items-center bg-slate-800 justify-center'>
-            <Card className="container bg-zinc-400 w-[90vw] p-2 m-2  shadow-sm shadow-rose-400">
+            <div className='flex items-center bg-slate-800 justify-center'>
+                <Card className="container bg-white w-[90vw] p-2 mt-8  shadow-sm shadow-rose-400">
 
-                <CardHeader>
-                    <CardTitle className="text-left font-bold text-3xl">{product.name}</CardTitle>
-                    <div className="text-2xl text-zinc-700">Product Description</div>
-                    <CardDescription className='text-md'>
-                        {product.description}
-                    </CardDescription>
-                </CardHeader>
+                    <CardHeader>
+                        <CardTitle className="text-left font-bold text-3xl">{product.name}</CardTitle>
+                        <div className="text-2xl text-zinc-700">Product Description</div>
+                        <CardDescription className='text-md'>
+                            {product.description}
+                        </CardDescription>
+                    </CardHeader>
 
-                <CardContent className="flex justify-center items-center">
-                    <img className="rounded-md w-[500px] h-[300px] object-contain" src={product.imageUrl} width={360} height={360} alt="product image" />
-                </CardContent>
+                    <CardContent className="flex justify-center items-center">
+                        <img className="rounded-md w-[500px] h-[300px] object-contain" src={product.imageUrl} width={360} height={360} alt="product image" />
+                    </CardContent>
 
-                <CardContent>
-                    <p className='text-3xl text-zinc-700 '>Price:  ${price?.toString()}</p>
-                </CardContent>
+                    <CardContent>
+                        <p className='text-3xl text-zinc-700 '>Price:  ${price?.toString()}</p>
+                    </CardContent>
 
-                <CardFooter className="flex flex-col justify-start items-start gap-2">
-                    <div>Rating: {product.rating.rating} / 5</div>
-                    <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
+                    <CardFooter className="flex flex-col justify-start items-start gap-2">
+                        <div>Rating: {product.rating.rating} / 5</div>
+                        <div className={`${disabled ? "text-red-700" : "text-green-700"} text-2xl font-bold`}>{stockState}</div>
 
-                    <div className="">
+                        <div className="">
 
-                        < Sizes
-                            setSelectedColor={setSelectedColor}
-                            colorsArray={colorsArray}
-                            selectedSize={selectedSize}
-                            quantity={product.quantity}
-                            setPrice={setPrice} setColorsArray={setColorsArray}
-                            setSelectedSize={setSelectedSize}
+                            < Sizes
+                                setSelectedColor={setSelectedColor}
+                                colorsArray={colorsArray}
+                                selectedSize={selectedSize}
+                                quantity={product.quantity}
+                                setPrice={setPrice} setColorsArray={setColorsArray}
+                                setSelectedSize={setSelectedSize}
+                            />
+                            <Tags tags={product.tags} />
+                            <Colors
+                                selectedColor={selectedColor}
+                                quantity={colorsArray}
+                                setSelectedColor={setSelectedColor}
+                            />
+                        </div>
+                        <AddToCartButton
+                            disabled={disabled}
+                            product={product}
+                            handleCartDispatch={handleCartDispatch}
                         />
-                        <Tags tags={product.tags} />
-                        <Colors
-                            selectedColor={selectedColor}
-                            quantity={colorsArray}
-                            setSelectedColor={setSelectedColor}
-                        />
-                    </div>
-                    <AddToCartButton
-                        disabled={disabled}
-                        product={product}
-                        handleCartDispatch={handleCartDispatch}
-                    />
-                </CardFooter>
+                    </CardFooter>
 
-            </Card>
-        </div>
+                </Card>
+            </div>
+
+        </ErrorBoundary>
     );
 };
 

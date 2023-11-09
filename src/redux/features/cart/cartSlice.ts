@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { revalidateTag } from "next/cache";
 export type CartState = {
     total: number,
     cartItem: {
@@ -75,7 +76,8 @@ const requestPurchase = createAsyncThunk("products/addtorequestqueue", async ({ 
         },
         body: JSON.stringify({
             cartItem: reqArray
-        })
+        }),
+
     });
     return await data.json();
 });

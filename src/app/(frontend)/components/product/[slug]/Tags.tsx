@@ -7,7 +7,7 @@ const Tags = ({ tags }: { tags: string[]; }) => {
                 <div className='flex flex-wrap gap-1'>
                     {
                         tags.map((tag) => {
-                            return <span className='m-1 text-pink-200 rounded-lg' key={tag}>#{tag}</span>;
+                            return <span className='m-1 text-rose-700 rounded-lg' key={tag}>#{tag}</span>;
                         })}
                 </div>
 

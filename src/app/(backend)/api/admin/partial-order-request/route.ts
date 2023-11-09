@@ -8,6 +8,7 @@ export async function POST(req: Request) {
     try {
         const { partialRequestItem, confirmation } = await req.json();
 
+
         const { PartialOrderItem, PartialOrderItemNotFoundError, RequestIdNotFoundError } = await findPurhaseRequestById({ reqId: partialRequestItem.id });
 
         if (PartialOrderItemNotFoundError || RequestIdNotFoundError) {
@@ -19,9 +20,9 @@ export async function POST(req: Request) {
                 const { Success, RejectPartialOrderItemUnknownError } = await handleRejectPartialOrderItem({ partialOrderItemId: PartialOrderItem.id, quantityId: PartialOrderItem.quantityId });
 
                 if (Success && !RejectPartialOrderItemUnknownError) {
-                    const { SendMailSuccess, MailRejected, SendMailUnkownError } = await sendMail({ message: "Your request which had been pending has been rejected", email: PartialOrderItem.userEmail! });
+                    const { SendMailSuccess, SendMailUnkownError } = await sendMail({ message: "Your request which had been pending has been rejected", email: PartialOrderItem.userEmail! });
 
-                    if (!SendMailSuccess || MailRejected || SendMailUnkownError) {
+                    if (!SendMailSuccess || SendMailUnkownError) {
                         return response({ status: 403, res: { message: "Email has been rejected" } });
                     }
 
@@ -51,13 +52,10 @@ export async function POST(req: Request) {
                     return response({ status: 404, res: { message: InvalidQuantityIdError } });
                 }
                 if (Success) {
-                    const { MailRejected, SendMailSuccess, SendMailUnkownError } = await sendMail({ message: "Thank you for your patience. The available quantity from request quantity will be delievred to you.", email: PartialOrderItem.userEmail! });
+                    const { SendMailSuccess, SendMailUnkownError } = await sendMail({ message: "Thank you for your patience. The available quantity from request quantity will be delievred to you.", email: PartialOrderItem.userEmail! });
 
                     if (SendMailUnkownError) {
                         return response({ status: 500, res: { message: "Unknown Error Occured" } });
-                    }
-                    if (MailRejected) {
-                        return response({ status: 403, res: { message: "Email has been rejected" } });
                     }
                     if (SendMailSuccess) {
                         return response({ status: 200, res: { message: "User Informed" } });

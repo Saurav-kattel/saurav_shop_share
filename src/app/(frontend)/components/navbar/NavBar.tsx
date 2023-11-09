@@ -17,7 +17,7 @@ const NavBar = () => {
         dispatch(checkIsAdmin(cookie));
     }, [cookie]);
     return (
-        <div className='flex z-10   px-6 shadow-sm bg-slate-800 h-16 justify-between items-center gap-1 sticky top-0'>
+        <div className='flex z-10   px-6 shadow-lg bg-slate-800 h-16 justify-between items-center gap-1 sticky top-0'>
             <div className=""></div>
             <div className='flex gap-2'>
                 <NavItems name='home' link='/' />

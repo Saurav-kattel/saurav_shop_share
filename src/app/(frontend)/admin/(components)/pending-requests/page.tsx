@@ -1,14 +1,16 @@
 import { cookies } from 'next/headers';
-import React from 'react';
+import React, { Suspense } from 'react';
 import RequestsComponents from './RequestsComponents';
 import { Metadata } from 'next';
-async function getData(auth: string) {
+import Loading from '@/app/services/utils/Loading';
+
+export async function getData(auth: string) {
     let res = await fetch(process.env.BASE_URL + "/api/admin/get-pending-purchase-request", {
         method: "GET",
         headers: {
             auth
         },
-        cache: "no-store"
+        cache: "no-store",
     });
     return await res.json();
 }
@@ -23,7 +25,9 @@ const page = async () => {
     if (data.res && data.res.data) {
         return (
             <div className='flex flex-col bg-slate-900 items-center justify-center'>
-                <RequestsComponents data={data.res.data} />
+                <Suspense fallback={<Loading />}>
+                    <RequestsComponents data={data.res.data} />
+                </Suspense>
             </div>
         );
     }

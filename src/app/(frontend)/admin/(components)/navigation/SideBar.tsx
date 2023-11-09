@@ -3,7 +3,7 @@ import SideNav from './SideNav';
 
 const SideBar = () => {
     return (
-        <div className='bg-slate-800 shadow-pink-700  shadow-inner'>
+        <div className='bg-slate-800 p-2'>
             <SideNav />
         </div>
 

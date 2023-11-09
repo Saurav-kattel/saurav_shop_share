@@ -10,6 +10,5 @@ export async function checkAdmin(cookies: string) {
         }
     });
     const user = await res.json();
-    console.log(user);
     return user.res && user.res.user && user.res.user.role === 'Admin';
 }
