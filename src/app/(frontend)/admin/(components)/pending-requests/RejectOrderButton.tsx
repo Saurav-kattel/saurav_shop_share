@@ -20,9 +20,10 @@ const RejectOrderButton = ({ item }: { item: any; }) => {
             appRouter.refresh();
         }
         const data = await res.json();
+        setLoading(false);
         console.error(data.res.message);
     }
-    setLoading(false);
+
     const router = useRouter();
     return (
         <Button
