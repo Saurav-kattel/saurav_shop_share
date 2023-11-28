@@ -47,15 +47,16 @@ const CardComponent = ({ products }: { products: Products }) => {
                 </span>
               </div>
               <div>Rating: {products.rating.rating} / 5</div>
-
-              <div
-                className={`${
-                  stockState === "OutOfStock"
-                    ? "text-red-600 border-red-600"
-                    : "text-green-700 border-green-700"
-                }  py-1 px-2 mt-2 border-[1px]  rounded-lg`}
-              >
-                {stockState}
+              <div>
+                <div
+                  className={`${
+                    stockState === "OutOfStock"
+                      ? "text-red-600 border-red-600"
+                      : "text-green-700 border-green-700"
+                  }  py-1 px-2 mt-2 border-[1px]  text-center w-[8vw] rounded-lg`}
+                >
+                  {stockState}
+                </div>
               </div>
             </div>
           </CardContent>

@@ -13,6 +13,16 @@ model User {
   email    String @unique
   password String
   role     Role   @default(User)
+  Otp      Otp[]
+}
+
+model Otp {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+  otp_val    Int
+  created_at DateTime @default(now())
+  expires_at DateTime @default(dbgenerated("NOW() + INTERVAL '10 MINUTE'"))
 }
 
 enum Role {
