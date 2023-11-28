@@ -1,32 +1,31 @@
-import React, { Suspense } from 'react';
-import ProductComponent from './ProductComponent';
-import { Metadata } from 'next';
+import React, { Suspense } from "react";
+import { Metadata } from "next";
 import { ErrorBoundary } from "react-error-boundary";
-import Error from '../utils/Error';
-import Loading from '@/app/services/utils/Loading';
+import Error from "../utils/Error";
+import Loading from "@/app/services/utils/Loading";
+const ProductComponent = React.lazy(() => import("./ProductComponent"));
 
 export const metadata: Metadata = {
-    title: 'Products - available products',
+  title: "Products - available products",
 };
 async function fetchProducts() {
-    const res = await fetch(`${process.env.BASE_URL}/api/product/get-product`, {
-        cache: "no-store",
-    });
-    return await res.json();
+  console.log("fecthing product data");
+  const res = await fetch(`${process.env.BASE_URL}/api/product/get-product`, {
+    cache: "no-store",
+  });
+  return await res.json();
 }
 const Page = async () => {
-    const data = await fetchProducts();
-    return (
-        <>
-            <ErrorBoundary fallback={<Error />} >
-                <Suspense fallback={<Loading />}>
-                    <ProductComponent products={data.res["product"]} />
-                </Suspense>
-            </ErrorBoundary>
-
-        </>
-    );
+  const data = await fetchProducts();
+  return (
+    <>
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary fallback={<Error />}>
+          <ProductComponent products={data.res["product"]} />
+        </ErrorBoundary>
+      </Suspense>
+    </>
+  );
 };
-
 
 export default Page;

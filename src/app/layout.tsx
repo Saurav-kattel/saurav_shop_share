@@ -1,27 +1,26 @@
-
-import './globals.css';
-import type { Metadata } from 'next';;
-import React from 'react';
-import { cookies } from 'next/headers';
-import { ClientCookiesProvider } from './(frontend)/components/utils/CookieClinetProvider';
-import NavBar from './(frontend)/components/navbar/NavBar';
-import Providers from './(frontend)/components/utils/Provider';
-
+import "./globals.css";
+import type { Metadata } from "next";
+import React from "react";
+import { cookies } from "next/headers";
+import { ClientCookiesProvider } from "./(frontend)/components/utils/CookieClinetProvider";
+import NavBar from "./(frontend)/components/navbar/NavBar";
+import Providers from "./(frontend)/components/utils/Provider";
 
 export const metadata: Metadata = {
-  title: 'Saurav shop',
-  description: 'Best e-commerce site into existance',
+  title: "Saurav shop",
+  description: "Best e-commerce site into existance",
 };
 
-function App({ children }: { children: React.ReactNode; }) {
+function App({ children }: { children: React.ReactNode }) {
   "use client";
-  return <>
-    <ClientCookiesProvider value={cookies().getAll()}>
-      <NavBar />
-      {children}
-    </ClientCookiesProvider>
-
-  </>;
+  return (
+    <>
+      <ClientCookiesProvider value={cookies().getAll()}>
+        <NavBar />
+        <div className="bg-slate-800">{children}</div>
+      </ClientCookiesProvider>
+    </>
+  );
 }
 export default function RootLayout({
   children,
@@ -32,9 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <App  >
-            {children}
-          </App>
+          <App>{children}</App>
         </Providers>
       </body>
     </html>

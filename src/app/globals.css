@@ -7,8 +7,50 @@
   padding: 0;
 }
 
-body {
+body::-webkit-scrollbar {
+  display: none;
+}
 
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.animation {
+  animation: animate-mounting;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  height: 100vh !important;
+  animation-fill-mode: forwards;
+  scroll-behavior: smooth;
+}
+
+@keyframes animate-mounting {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+    transform: translatey(80%);
+  }
+  40% {
+    opacity: 0.4;
+    transform: translatey(60%);
+  }
+  60% {
+    opacity: 0.6;
+    transform: translatey(40%);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translatey(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translatey(0%);
+  }
+}
+
+body {
   overflow-x: hidden;
 }
 
