@@ -22,7 +22,7 @@ model Otp {
   user_id    String
   otp_val    Int
   created_at DateTime @default(now())
-  expires_at DateTime @default(dbgenerated("NOW() + INTERVAL '10 MINUTE'"))
+  expires_at DateTime @default(dbgenerated("NOW() + interval '10 minute'"))
 }
 
 enum Role {
