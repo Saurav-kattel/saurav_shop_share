@@ -3,10 +3,10 @@ import { createOtp } from "@/app/services/api/user/otp/createOtp";
 import { deleteOtpById } from "@/app/services/api/user/otp/deleteOtpById";
 import { generateOtp } from "@/app/services/api/user/otp/generateOtp";
 import { generateToken } from "@/app/services/api/user/user/tokens/generateToken";
-import { getOtpByUserId } from "@/app/services/api/user/verify-otp/getOtpByUserId";
 import { getUser } from "@/app/services/api/user/user/getUser";
 import { response } from "@/app/services/utils/response";
 import { NextResponse } from "next/server";
+import { getOtpByUserId } from "@/app/services/api/user/otp/getOtpByUserId";
 
 export async function POST(req: Request) {
   try {
