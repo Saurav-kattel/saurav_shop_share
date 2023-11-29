@@ -1,10 +1,12 @@
-import { sendMail } from "@/app/services/api/admin/sendMail";
-import { createOtp } from "@/app/services/api/user/createOtp";
-import { deleteOtpById } from "@/app/services/api/user/deleteOtpById";
-import { generateOtp } from "@/app/services/api/user/generateOtp";
-import { getOtpByUserId } from "@/app/services/api/user/getOtpByUserId";
-import { getUser } from "@/app/services/api/user/getUser";
+import { sendMail } from "@/app/services/api/admin/product/sendMail";
+import { createOtp } from "@/app/services/api/user/otp/createOtp";
+import { deleteOtpById } from "@/app/services/api/user/otp/deleteOtpById";
+import { generateOtp } from "@/app/services/api/user/otp/generateOtp";
+import { generateToken } from "@/app/services/api/user/user/tokens/generateToken";
+import { getOtpByUserId } from "@/app/services/api/user/verify-otp/getOtpByUserId";
+import { getUser } from "@/app/services/api/user/user/getUser";
 import { response } from "@/app/services/utils/response";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
@@ -55,11 +57,15 @@ export async function POST(req: Request) {
           res: { message: "An Unknon error occured please try again" },
         });
       }
-
-      return response({
-        status: 200,
-        res: { success: true, message: "sent mail successfully" },
+      const { token } = await generateToken({
+        userId: user.id,
       });
+      const resWithCookies = NextResponse.json(
+        { res: { message: "sent mail successfully", success: true } },
+        { status: 200 }
+      );
+      resWithCookies.cookies.set("otp_verifcation_cookie", token);
+      return resWithCookies;
     }
 
     let { DeleteOtpError } = await deleteOtpById(dupOtp.id);
@@ -94,11 +100,21 @@ export async function POST(req: Request) {
         res: { message: "An unknown error occured" },
       });
     }
-
-    return response({
-      status: 200,
-      res: { success: true, message: "sent mail successfully" },
+    const { token } = await generateToken({
+      userId: user.id,
     });
+    const resWithCookies = NextResponse.json(
+      { res: { message: "sent mail successfully", success: true } },
+      { status: 200 }
+    );
+    resWithCookies.cookies.set({
+      name: "otp_verifcation_cookie",
+      value: token,
+      maxAge: 1000 * 60 * 10,
+      path: "/",
+      httpOnly: true,
+    });
+    return resWithCookies;
   } catch (err) {
     return response({ status: 500, res: { message: "internal server error" } });
   }

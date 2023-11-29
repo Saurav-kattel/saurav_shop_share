@@ -13,8 +13,6 @@ const ForgetPasswordForm = () => {
   const router = useRouter();
 
   function redirect(otpRes: OtpRes | undefined, router: any) {
-    console.log(otpRes);
-
     if (otpRes?.res.success) {
       setTimeout(() => {
         router.push("/components/user/verify-otp");
