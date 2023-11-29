@@ -14,9 +14,7 @@ const ForgetPasswordForm = () => {
 
   function redirect(otpRes: OtpRes | undefined, router: any) {
     if (otpRes?.res.success) {
-      setTimeout(() => {
-        router.push("/components/user/verify-otp");
-      }, 1000);
+      router.push("/components/user/verify-otp");
     }
   }
 
@@ -79,16 +77,6 @@ const ForgetPasswordForm = () => {
           </div>
           {/* Error or Success section */}
           <div className="w-[25vw] h-[6vh] flex items-center justify-center">
-            {!loading && otpRes?.res.success ? (
-              <div className="p-2">
-                <p className="text-green-600 font-semibold lowercase">
-                  Otp has been sent to your email
-                </p>
-                <p className="text-green-600  text-ellipsis">
-                  Redirecting to verificaiton page...
-                </p>
-              </div>
-            ) : null}
             {!loading && !otpRes?.res.success ? (
               <p className="text-red-600 font-semibold lowercase ">
                 {otpRes?.res.message}
