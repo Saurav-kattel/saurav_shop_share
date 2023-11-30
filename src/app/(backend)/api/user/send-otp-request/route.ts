@@ -114,6 +114,7 @@ export async function POST(req: Request) {
       path: "/",
       httpOnly: true,
     });
+    resWithCookies.cookies.delete("auth");
     return resWithCookies;
   } catch (err) {
     return response({ status: 500, res: { message: "internal server error" } });

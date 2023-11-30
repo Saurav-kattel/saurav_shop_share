@@ -7,13 +7,30 @@ export async function getOtpByUserId(userId: string, otp?: number) {
         where: {
           user_id: userId,
         },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+            },
+          },
+        },
       });
       return { dupOtp, OtpFetchError: undefined };
     }
+
     let dupOtp = await prisma.otp.findFirst({
       where: {
         user_id: userId,
         otp_val: otp,
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+          },
+        },
       },
     });
     console.log(dupOtp);

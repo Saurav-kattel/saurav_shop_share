@@ -64,7 +64,8 @@ export async function POST(req: Request) {
 
     const newVerifiedToken = await generateTokenForValidOtp({
       accepted: "this_otp_was_accepted",
-      userId: dupOtp.user_id,
+      userId: dupOtp.user.id,
+      email: dupOtp.user.email,
     });
 
     let responseWithCookies = NextResponse.json(

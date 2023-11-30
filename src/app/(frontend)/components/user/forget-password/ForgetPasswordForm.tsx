@@ -30,11 +30,11 @@ const ForgetPasswordForm = () => {
         email,
       }),
     });
-    setEmail("");
     let data = await res.json();
     setOtpRes(data);
-    setLoading(false);
     redirect(data, router);
+    setLoading(false);
+    setEmail("");
   }
   return (
     <div className="w-full h-[100vh] flex flex-col justify-center items-center">
