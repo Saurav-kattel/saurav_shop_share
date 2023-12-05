@@ -22,7 +22,7 @@ const CardComponent = ({ products }: { products: Products }) => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Card className="container font-semibold text-slate-600 w-[15vw] p-0 h-[75vh] shadow-sm border-[1px] border-spacing-0 border-rose-400 shadow-rose-400">
+      <Card className="container font-semibold text-slate-600 w-[15vw] p-0  shadow-sm border-[1px] border-spacing-0 border-rose-400 shadow-rose-400">
         <Link href={"/components/product/" + products.id}>
           <CardHeader>
             <img
@@ -34,7 +34,7 @@ const CardComponent = ({ products }: { products: Products }) => {
 
           <CardContent className="flex justify-center flex-col items-center">
             <div className="bg-slate-200 w-[12vw]  py-4  rounded-lg px-3">
-              <CardTitle className="text-left text-rose-500 capitalize  mb-2  font-bold text-3xl">
+              <CardTitle className="text-left h-[4rem]  hide-scroll text-rose-500 text-ellipsis overflow-scroll capitalize  mb-2  font-bold text-md">
                 {products.name}
               </CardTitle>
 

@@ -12,12 +12,6 @@ const ForgetPasswordForm = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  function redirect(otpRes: OtpRes | undefined, router: any) {
-    if (otpRes?.res.success) {
-      router.push("/components/user/verify-otp");
-    }
-  }
-
   async function handleForgetPasswordRequest(
     e: React.FormEvent,
     email: string
@@ -31,9 +25,10 @@ const ForgetPasswordForm = () => {
       }),
     });
     let data = await res.json();
+    if (otpRes?.res.success) {
+      router.push("/components/user/verify-otp");
+    }
     setOtpRes(data);
-    redirect(data, router);
-    setLoading(false);
     setEmail("");
   }
   return (

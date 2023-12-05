@@ -62,7 +62,7 @@ const ChangePasswordForm = ({ token }: { token: string | undefined }) => {
             />
           </label>
           <label className="flex flex-col gap-1 items-start justify-center text-rose-500">
-            <span>Confrim Password</span>
+            <span>Confirm Password</span>
             <input
               value={confPassword}
               onChange={(e) => {
