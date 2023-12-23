@@ -25,7 +25,7 @@ const ForgetPasswordForm = () => {
       }),
     });
     let data = await res.json();
-    if (otpRes?.res.success) {
+    if (data?.res.success) {
       router.push("/components/user/verify-otp");
     }
     setOtpRes(data);

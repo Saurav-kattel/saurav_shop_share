@@ -4,11 +4,13 @@ import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const VerificationForm = () => {
+const VerificationForm = ({ new_cookie }: { new_cookie: string }) => {
   const [otp, setOtp] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const cookie = useCookies();
+  console.log(cookie.get("otp_verifcation_cookie"));
   const verificationAuth = cookie.get("otp_verifcation_cookie") ?? "";
+  console.log(verificationAuth);
   const [resData, setResData] = useState<{
     res: { message: string; success?: boolean };
   }>();

@@ -10,6 +10,7 @@ export async function POST(req: Request) {
   try {
     let { otp } = await req.json();
     let token = await req.headers.get("otp_verifcation_cookie");
+    console.log(token);
 
     if (!token) {
       return response({
